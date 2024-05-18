@@ -8,7 +8,7 @@ El pooyecto sera un serpientes y escaleras
 
 
 COMANDOS
-cd buidl
+cd build
 mingw32-make
 ./name.exe
 
@@ -27,7 +27,7 @@ int main()
     {
         BeginDrawing();
             ClearBackground(RAYWHITE);
-            DrawText("Hola mundo",screenWidth/2,screenHeight/2,24,BLACK);
+            DrawText("Hola mundo",(screenWidth/2 ) - 50,(screenHeight/2) - 20,24,BLACK);
         EndDrawing();
     }
     CloseWindow();
