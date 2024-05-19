@@ -5,7 +5,7 @@ class Player
 private:
     short int NumPlayer;
     Color PlayerColor;
-    Vector2 Position=0;
+    Vector2 Position=1;
 public:
     Player(short int NumPlayer=1,Color PlayerColor = BLUE);
     vectro2 Move(int NumCas);
