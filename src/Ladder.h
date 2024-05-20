@@ -1,9 +1,10 @@
+#include "raylib.h"
 class Ladder
 {
-private:
-    
 public:
-    Ladder();
+    Vector2 Destiny;
+    Vector2 Base;
 
+    Ladder(Vector2 Destiny,Vector2 Base);
 };
 
