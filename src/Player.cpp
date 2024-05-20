@@ -6,15 +6,15 @@ Player::Player(short int NumPlayer, Color PlayerColor)
     this->PlayerColor = PlayerColor;
 }
 
-vector2 Player::Move(int NumCas)
+Vector2 Player::Move(int NumCas)
 {
     for (int i = 0; i < NumCas; i++)
     {
-        if (Position.y % 2 == 1)
+        if ((int)Position.y % 2 == 1)
         {
             Position.x++;
         }
-        if (Position.y % 2 == 0)
+        if ((int)Position.y % 2 == 0)
         {
             Position.x--;
         }
@@ -28,3 +28,8 @@ vector2 Player::Move(int NumCas)
 
    
 }
+
+// Player::Roll()
+// {
+//     return Dice::Roll();
+// }

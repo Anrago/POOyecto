@@ -5,8 +5,7 @@ Dice::Dice(short int MaxMumber)
     this->MaxNumber=MaxMumber;
 }
 
-int Dice::Roll()
-{
-    srand(time(NULL));
-    return rand()%MaxNumber+1;
-}
+// int Dice::Roll()
+// {
+//     return rand()%MaxNumber+1;
+// }

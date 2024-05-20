@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "Board.h"
 
 /*      POOYECTO-SNAKE AND LADDERS
 
@@ -22,7 +23,8 @@ int main()
     int screenHeight = 720;
     InitWindow(screenWidth, screenHeight,"SerpientesyEscaleras");
     SetTargetFPS(60);
-
+    srand(time(NULL));
+    
     while (!WindowShouldClose())
     {
         BeginDrawing();
