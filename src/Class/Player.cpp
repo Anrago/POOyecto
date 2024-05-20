@@ -6,7 +6,7 @@ Player::Player(short int NumPlayer, Color PlayerColor)
     this->PlayerColor = PlayerColor;
 }
 
-vectro2 Player::Move(int NumCas)
+vector2 Player::Move(int NumCas)
 {
     for (int i = 0; i < NumCas; i++)
     {
@@ -24,6 +24,7 @@ vectro2 Player::Move(int NumCas)
             Position.y++;
         }
     }
+    return Position;
 
-    return vectro2();
+   
 }

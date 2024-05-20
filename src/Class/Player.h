@@ -8,6 +8,6 @@ private:
     Vector2 Position=1;
 public:
     Player(short int NumPlayer=1,Color PlayerColor = BLUE);
-    vectro2 Move(int NumCas);
+    vector2 Move(int NumCas);
 
 };

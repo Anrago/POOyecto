@@ -8,5 +8,5 @@ Dice::Dice(short int MaxMumber)
 int Dice::Roll()
 {
     srand(time(NULL));
-    return rand()%100+1;
+    return rand()%MaxNumber+1;
 }
