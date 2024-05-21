@@ -25,6 +25,7 @@ int main()
     SetTargetFPS(60);
     srand(time(NULL));
     
+    
     while (!WindowShouldClose())
     {
         BeginDrawing();
