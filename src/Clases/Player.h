@@ -35,6 +35,7 @@ public:
     int casilla;
     // la fila para saber a que residuo dividirlo para las esquinas
     int fila;
+    int res;
 
     // ------------- Functions-------------- //
     Player(int screenWidth, int screenHeight,Board map);
@@ -52,51 +53,41 @@ Player::Player(int screenWidth, int screenHeight,Board map){
     this->rec.height=map.GridSize;
 
     this->casilla=1;
+    this->res=10;
     
     this->back=false;
 }
 
 void Player::MovePosition(int x){
 
-    int res=10;
-
     for(int i = 0 ; i < x ; i++){
         // Posicion en X
         // Posicion en Y
-        if(int(this->casilla) % res == 0){
+        if(int(this->casilla) % this->res == 0){
             // position.y+1;
-            this->rec.y+= map.GridSize;
+            if(this->back==false){
+                this->rec.y+= map.GridSize;
+                
+                this->back=true;
+            }
+            else{
+                this->rec.y+= map.GridSize;
+                
+                this->back=false;
+
+            }
         }
         else{
             if(this->back == false){
-                
-                    this->rec.x += map.GridSize;
-                
+                this->rec.x += map.GridSize;
             }
             else{
-                
-                    this->rec.x -= map.GridSize;   
-                
+                this->rec.x -= map.GridSize;   
             }
 
         }
-        
-
-        
 
         this->casilla++;
-        
-
-        if(int(this->casilla) % res == 0 && this->back== false){
-            this->back=true;
-            res++;
-        }
-        else {
-            if(int(this->casilla) % res == 0 && this->back == true){
-                this->back=false;
-                res--;
-            }
-        }
         
     }
 }

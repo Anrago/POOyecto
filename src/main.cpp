@@ -70,7 +70,7 @@ int main(){
             if(CheckCollisionPointRec(Click,boton)){
                 dado=dice1.DropDice();
                 cout<<dado<<endl;
-                p1.MovePosition(1);
+                p1.MovePosition(dado);
                 Click.x=0;
                 Click.y=0;
             }
