@@ -4,12 +4,13 @@
 
 class Ladders{
 public:
-    Vector2 start,finish;
+    Rectangle start,finall;
 
-    Ladders(Vector2 start, Vector2 finish);
+    Ladders(Rectangle start, Rectangle finish);
+    void Up(Player p1)
 };
 
-Ladders::Ladders(Vector2 start, Vector2 finish){
+Ladders::Ladders(Rectangle start, Rectangle finish){
     this->start=start;
     this->finish=finish;
 }

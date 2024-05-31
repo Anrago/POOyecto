@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "./Clases/Player.h"
+#include "./Clases/Snake.h"
 
 
 int main(){
@@ -18,6 +19,13 @@ int main(){
     Dice dice1,dice2;
     Board map(screenWidth,screenHeight);
     Player p1(screenWidth,screenHeight,map);
+
+    // --------- Serpientes --------- //
+    Rectangle s1Start=p1.getCordCasilla(4);
+    Rectangle s1Finish=p1.getCordCasilla(12);
+    Snake s1(s1Start,s1Finish);
+
+    int filatemp=p1.getFila(10);
 
     int dado;
 
@@ -66,13 +74,22 @@ int main(){
             }
             DrawRectangleRec(p1.rec,RED);
 
+            DrawRectangleRec(s1.start,GREEN);
+            DrawRectangleRec(s1.finall,GREEN);
+
+            if (CheckCollisionRecs(p1.rec,s1.finall)){
+                p1=s1.Down(p1);
+                
+            }
+            
+
             DrawRectangleRec(boton,RED);
             if(CheckCollisionPointRec(Click,boton)){
+
+                cout<<filatemp<<endl;
                 dado=dice1.DropDice();
-                cout<<dado<<endl;
-                p1.MovePosition(dado);
-                Click.x=0;
-                Click.y=0;
+                p1.MovePosition(1);
+                Click={0,0};
             }
             
 
