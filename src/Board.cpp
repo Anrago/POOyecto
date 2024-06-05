@@ -11,7 +11,7 @@ void Board::DrawBoard(int PosX, int PosY)
     {
         // Ciclo para recorrer columnas
         for (int j = 0; j < 10; j++)
-        {
+        { 
             // Calcula las coordenadas de la celda
             int cellX = PosX + j * (CELL_SIZE + PADDING);
             int cellY = PosY + i * (CELL_SIZE + PADDING);

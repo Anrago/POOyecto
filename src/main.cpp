@@ -32,15 +32,13 @@ int main()
     Vector2 a;
     a.x= -1;
     int b = a.x;
-    
-    int matrix[10][10]={0};
     Board Tablero;
     Tablero.InitPlayer(1,GREEN);
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(GRAY);
-        Tablero.DrawBoard(40,80);
+        Tablero.DrawBoard(80,80);
         if(IsKeyPressed(KEY_D))
         {
             Tablero.MovePlayer();
