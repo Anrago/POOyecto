@@ -1,10 +1,10 @@
 #include "raylib.h"
 class Snake
 {
-private:
+public:
     Vector2 Header;
     Vector2 Tail;
-public:
+    Snake();
     Snake(Vector2 Header,Vector2 Tail);
 };
 

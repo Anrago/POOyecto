@@ -2,13 +2,13 @@
 #include "Dice.h"
 class Player
 {
-private:
+public:
     short int NumPlayer;
     Color PlayerColor;
-    Vector2 Position;
-public:
+    Vector2 Position = {0,0};
     Player(short int NumPlayer=1,Color PlayerColor = BLUE);
-    Vector2 Move(int NumCas);
+    void Move(int NumCas);
     //virtual int Roll();
+
 
 };

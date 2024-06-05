@@ -6,27 +6,30 @@ Player::Player(short int NumPlayer, Color PlayerColor)
     this->PlayerColor = PlayerColor;
 }
 
-Vector2 Player::Move(int NumCas)
+void Player::Move(int NumCas)
 {
     for (int i = 0; i < NumCas; i++)
     {
         if ((int)Position.y % 2 == 1)
         {
-            Position.x++;
+            Position.x--;
         }
         if ((int)Position.y % 2 == 0)
         {
-            Position.x--;
+            Position.x++;
         }
 
-        if (Position.x == 10 || Position.x == 1)
+        if ((int)Position.x == 10)
         {
             Position.y++;
+            Position.x--;
         }
-    }
-    return Position;
-
-   
+        if((int)Position.x == -1)
+        {
+            Position.y++;
+            Position.x++;
+        }
+    }   
 }
 
 // Player::Roll()
