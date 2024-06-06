@@ -22,7 +22,7 @@ Rectangle Ladder::DrawLadder(int PosX, int PosY, int CELL_SIZE, int PADDING)
     Rectangle CellBase = {cellXBase, cellYBase, CELL_SIZE, CELL_SIZE};
     Rectangle CellDestiny = {cellXDestiny, cellYDestiny, CELL_SIZE, CELL_SIZE};
 
-    DrawRectangle(CellBase.x, CellBase.y, CellBase.width, CellBase.height, BROWN);
+    DrawRectangle(CellBase.x, CellBase.y, CellBase.width, CellBase.height, DARKBROWN);
     DrawRectangle(CellDestiny.x, CellDestiny.y, CellDestiny.width, CellDestiny.height, BROWN);
     return CellBase;
 }

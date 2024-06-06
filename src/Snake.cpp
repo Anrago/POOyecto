@@ -22,7 +22,7 @@ Rectangle Snake::DrawSnake(int PosX, int PosY, int CELL_SIZE, int PADDING)
     Rectangle CellHeader = {cellXHeader, cellYHeader, CELL_SIZE, CELL_SIZE};
     Rectangle CellTail = {cellXTail, cellYTail, CELL_SIZE, CELL_SIZE};
 
-    DrawRectangle(CellHeader.x, CellHeader.y, CellHeader.width, CellHeader.height, GREEN);
+    DrawRectangle(CellHeader.x, CellHeader.y, CellHeader.width, CellHeader.height, DARKGREEN);
     DrawRectangle(CellTail.x, CellTail.y, CellTail.width, CellTail.height, GREEN);
     return CellTail;
 }
