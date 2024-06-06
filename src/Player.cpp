@@ -12,24 +12,34 @@ void Player::Move(int NumCas)
     {
         if ((int)Position.y % 2 == 1)
         {
-            Position.x--;
+            Position.x++;
         }
         if ((int)Position.y % 2 == 0)
         {
-            Position.x++;
+            Position.x--;
         }
 
         if ((int)Position.x == 10)
         {
-            Position.y++;
+            Position.y--;
             Position.x--;
         }
-        if((int)Position.x == -1)
+        if ((int)Position.x == -1)
         {
-            Position.y++;
+            Position.y--;
             Position.x++;
         }
-    }   
+    }
+}
+
+Rectangle Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
+{
+    int cellX = PosX + Position.x * (CELL_SIZE + PADDING);
+    int cellY = PosY + Position.y * (CELL_SIZE + PADDING);
+
+    Rectangle cellRect = {cellX, cellY, CELL_SIZE, CELL_SIZE};
+    DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, BLUE);
+    return cellRect;
 }
 
 // Player::Roll()

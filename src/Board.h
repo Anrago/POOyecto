@@ -16,7 +16,7 @@ class Board
 private:
     int BoardM[COLUMNS][ROWS];
     Snake snakes;
-    // Ladder ladders;
+    Ladder ladders;
     Player players;
     Dice dices;
 public:
@@ -25,7 +25,5 @@ public:
     void DrawBoard(int PosX, int PosY);
     void InitPlayer(short int NumPlayer,Color ColorPlayer);
     void MovePlayer();
-    void DrawPlayer(int PosX, int PosY);
-    void DrawSnake(int PosX, int PosY);
 
 };

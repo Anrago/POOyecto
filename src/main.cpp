@@ -42,7 +42,7 @@ int main()
         if(IsKeyPressed(KEY_D))
         {
             Tablero.MovePlayer();
-            printf("%d",b);
+
         }
         EndDrawing();
     }
