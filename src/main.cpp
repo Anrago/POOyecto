@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include "Board.h"
 
-#define COLUMNS 10
-#define RWOS 10
-#define CELL_SIZE 40
-#define PADDING 5
 
 /*      POOYECTO-SNAKE AND LADDERS
 

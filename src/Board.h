@@ -7,8 +7,8 @@
 
 #define COLUMNS 10
 #define ROWS 10
-#define CELL_SIZE 40
-#define PADDING 5
+#define CELL_SIZE 50
+#define PADDING 10
 
 using std::vector;
 class Board
