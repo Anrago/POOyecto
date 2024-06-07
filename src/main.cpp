@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "Board.h"
 
-
 /*      POOYECTO-SNAKE AND LADDERS
 
 El pooyecto sera un serpientes y escaleras
@@ -16,29 +15,27 @@ mingw32-make
 
 */
 
-
 int main()
 {
-    //Ventana
+    // Ventana
     int screenWidth = 1280;
     int screenHeight = 720;
-    InitWindow(screenWidth, screenHeight,"SerpientesyEscaleras");
+    InitWindow(screenWidth, screenHeight, "SerpientesyEscaleras");
     SetTargetFPS(60);
     srand(time(NULL));
     Vector2 a;
-    a.x= -1;
+    a.x = -1;
     int b = a.x;
-    Board Tablero;
-    Tablero.InitPlayer(1,GREEN);
+    Board Tablero = {4};
+    // Tablero.InitPlayer(1,GREEN);
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(GRAY);
-        Tablero.DrawBoard(80,80);
-        if(IsKeyPressed(KEY_D))
+        Tablero.DrawBoard(320, 80);
+        if (IsKeyPressed(KEY_D))
         {
             Tablero.MovePlayer();
-
         }
         EndDrawing();
     }

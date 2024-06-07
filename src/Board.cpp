@@ -2,6 +2,17 @@
 
 Board::Board()
 {
+    NumPlayers = 2;
+}
+
+Board::Board(short int NumPlayers)
+{
+    Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
+    for (int i = 0; i < NumPlayers; i++)
+    {
+        Player Temp = {NumPlayers, colorsP[i]};
+        players.push_back(Temp);
+    }
 }
 
 void Board::DrawBoard(int PosX, int PosY)
@@ -20,23 +31,27 @@ void Board::DrawBoard(int PosX, int PosY)
             Rectangle cellRect = {cellX, cellY, CELL_SIZE, CELL_SIZE};
             DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, BLACK);
         }
-        Rectangle CollisionP = players.DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
+
         Rectangle CollisionS = snakes.DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
         Rectangle CollisionL = ladders.DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
 
-        if (CheckCollisionRecs(CollisionP, CollisionS))
-            players.Position = snakes.Header;
-        if (CheckCollisionRecs(CollisionP, CollisionL))
-            players.Position = ladders.Destiny;
-    }
-}
+        Rectangle CollisionP = players[1].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
+        players[0].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
+        players[2].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
+        players[3].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
+        // Rectangle CollisionP =
 
-void Board::InitPlayer(short int NumPlayer, Color ColorPlayer)
-{
-    players = {NumPlayer, ColorPlayer};
+        if (CheckCollisionRecs(CollisionP, CollisionS))
+            players[1].Position = snakes.Header;
+        if (CheckCollisionRecs(CollisionP, CollisionL))
+            players[1].Position = ladders.Destiny;
+    }
 }
 
 void Board::MovePlayer()
 {
-    players.Move(1);
+    players[0].Move(2);
+    players[1].Move(1);
+    players[2].Move(3);
+    players[3].Move(0);
 }

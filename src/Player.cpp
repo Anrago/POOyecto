@@ -38,9 +38,10 @@ Rectangle Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
     int cellY = PosY + Position.y * (CELL_SIZE + PADDING);
 
     Rectangle cellRect = {cellX, cellY, CELL_SIZE, CELL_SIZE};
-    DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, BLUE);
+    DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);
     return cellRect;
 }
+
 
 // Player::Roll()
 // {

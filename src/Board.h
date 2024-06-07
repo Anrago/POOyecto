@@ -14,16 +14,15 @@ using std::vector;
 class Board
 {
 private:
-    int BoardM[COLUMNS][ROWS];
     Snake snakes;
     Ladder ladders;
-    Player players;
+    vector <Player> players;
     Dice dices;
+    short int NumPlayers;
 public:
     Board();
-    //int GetCells(){return Cells;};
+    Board(short int NumPlayers);
     void DrawBoard(int PosX, int PosY);
-    void InitPlayer(short int NumPlayer,Color ColorPlayer);
     void MovePlayer();
 
 };
