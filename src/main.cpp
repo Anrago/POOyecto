@@ -27,7 +27,6 @@ int main()
     a.x = -1;
     int b = a.x;
     Board Tablero;
-    // Tablero.InitPlayer(1,GREEN);
     while (!WindowShouldClose())
     {
         BeginDrawing();
