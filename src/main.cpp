@@ -16,6 +16,19 @@ mingw32-make
 
 */
 
+typedef enum Screen{
+    MENU,
+    PLAYER_SELECTION,
+    GAME,
+    WINNERS,
+    EXIT
+}Screen;
+
+// ---------------------- Prototipos ---------------------- //
+Screen DrawMenu(int screenWidth, int screenHeight);
+void DrawExit(int screenWidth, int screenHeight);
+
+// ---------------------- Main ---------------------- //
 int main()
 {
     // Ventana
@@ -24,44 +37,164 @@ int main()
     InitWindow(screenWidth, screenHeight, "SerpientesyEscaleras");
     SetTargetFPS(60);
     srand(time(NULL));
-    // Variable inutilizada
-    // Vector2 a;
-    // a.x = -1;
-    // int b = a.x;
     
+    // Jugadores actuales jugando
     int PlayerPlaying=2;
 
-    Board Tablero(PlayerPlaying);
-    // we define the texture of the snake
-    Tablero.DefineSnakeTexture();
-    
-    Dice dado;
+    // turno y movimiento de jugadores
     int playerTurn=0;
     int playerMove=0;
+    
+    // Tablero
+    Board Tablero(PlayerPlaying);
+    // Definimos la textura de las serpientes
+    Tablero.DefineSnakeTexture();
+    
+    // Dados
+    Dice dado;
 
-    while (!WindowShouldClose())
+    // Escena actual
+    Screen currentScreen=MENU;
+
+    bool exit = false;
+    while (!WindowShouldClose() && exit == false)
     {
-        BeginDrawing();
-        ClearBackground(GRAY);
-        Tablero.DrawBoard(120, 80);
-        
-        
-        if (IsKeyPressed(KEY_D))
+        switch (currentScreen)
         {
-            playerMove = dado.DropDice();
-            
-            Tablero.MovePlayer(playerTurn,playerMove);
-            
-            playerTurn++;
-            
-            if(playerTurn >= PlayerPlaying){
-                playerTurn=0;
-            }
+        case MENU:
+        {
+            currentScreen = DrawMenu(screenWidth,screenHeight);
+            break;
         }
-        EndDrawing();
+        case PLAYER_SELECTION:
+        {
+            break;
+        }
+        case GAME:
+        {
+            BeginDrawing();
+                ClearBackground(GRAY);
+                Tablero.DrawBoard(120, 80);
+                    
+                if (IsKeyPressed(KEY_D))
+                {
+                    playerMove = dado.DropDice();
+                    
+                    Tablero.MovePlayer(playerTurn,playerMove);
+                    
+                    playerTurn++;
+                    
+                    if(playerTurn >= PlayerPlaying){
+                        playerTurn=0;
+                    }
+                }
+            EndDrawing();
+            break;
+        }
+        case EXIT:
+        {
+            DrawExit(screenWidth,screenHeight);
+            exit = true;
+            break;
+        }
+        default:
+            break;
+        }
     }
     CloseWindow();
 
+    // Liberamos memoria
     Tablero.FreeSnakeTexture();
     return 0;
+}
+
+// ---------------------- Menu y pantallas de movimiento ---------------------- //
+
+Screen DrawMenu(int screenWidth, int screenHeight){
+    
+    // -------- Texturas -------- //
+    Texture2D background = LoadTexture("../assets/MenuBackgroundClean.png");
+
+    Texture2D startButton = LoadTexture("../assets/buttons/StartButtonDef.png");
+    Texture2D exitButton = LoadTexture("../assets/buttons/ExitButton.png");
+
+    // -------- Botones -------- //
+    
+    // Rec de iniciar
+    Rectangle StartR;
+    StartR.x=(screenWidth / 2) - (startButton.width / 2);
+    StartR.y=screenHeight *0.57;
+    StartR.width=startButton.width;
+    StartR.height=startButton.height;
+
+    // Posicion del boton de iniciar
+    Vector2 StartV;
+    StartV.x=StartR.x;
+    StartV.y=StartR.y;
+
+    // Rec de salida
+    Rectangle ExitR;
+    ExitR.x=(screenWidth / 2) - (exitButton.width / 2);
+    ExitR.y=screenHeight * 0.77;
+    ExitR.width=exitButton.width;
+    ExitR.height=exitButton.height;
+
+    // Posicion del boton de salida
+    Vector2 ExitV;
+    ExitV.x=ExitR.x;
+    ExitV.y=ExitR.y;
+
+    // Salida
+    bool finish = false;
+
+    Vector2 mouse;
+    Vector2 click;
+
+
+    while (finish== false)
+    {
+        BeginDrawing();
+            mouse=GetMousePosition();
+
+            // Checamos cada que da click en que posicion, y la almacenamos en click
+            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                click=mouse;
+            }
+
+            // Menu
+            DrawTexture(background,0,0,WHITE);
+            // Boton de iniciar
+            DrawTextureEx(startButton,StartV,0.0f,1.0f,WHITE);
+            // Boton de salir
+            DrawTextureEx(exitButton,ExitV,0.0f,1.0f,WHITE);
+            
+
+            if(CheckCollisionPointRec(click,StartR)){
+                // No deberia de ser game, deberia de ser la seleccion de cuantos personajes va a querer
+                return GAME;
+            }
+            
+            if(CheckCollisionPointRec(click,ExitR)){
+                return EXIT;
+            }
+
+        EndDrawing();
+    }
+    return MENU;
+}
+
+void DrawExit(int screenWidth, int screenHeight){
+    Texture2D background = LoadTexture("../assets/GOODBYE.png");
+
+    float timetolive=1.5f;
+    float actualtime=0.0f;
+    
+    while(actualtime <=timetolive){
+        BeginDrawing();
+            actualtime+=GetFrameTime();
+            DrawTexture(background,0,0,WHITE);
+        EndDrawing();
+    }
+    UnloadTexture(background);
+
 }

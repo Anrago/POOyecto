@@ -58,6 +58,7 @@ void Board::DrawBoard(int PosX, int PosY)
                 Rectangle Tail = snakes[x].DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
                 Rectangle Base = ladders[x].DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
 
+
                 if (CheckCollisionRecs(ActColision, Tail)) // Verifica colision entre jugador y serpiente
                     players[k].Position = snakes[x].Header;
                 if (CheckCollisionRecs(ActColision, Base)) // Verifica colision entre jugador y escalera
@@ -101,16 +102,14 @@ void Board::InitSnakes()
 {
     Snake temp = {{5, 9}, {6, 5}}; // Primero cola luego cabeza
     snakes.push_back(temp);
-    temp = {{3, 9}, {8, 2}};
-    snakes.push_back(temp);
+    
 }
 
 void Board::InitLadders()
 {
     Ladder temp = {{5, 2}, {6, 8}}; // Primero base luego destino
     ladders.push_back(temp);
-    temp = {{9, 3}, {5, 6}};
-    ladders.push_back(temp);
+    
 }
 
 void Board::DefinePlayerSkinGhost()
