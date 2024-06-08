@@ -34,10 +34,11 @@ void Player::Move(int NumCas)
 
 Rectangle Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
 {
-    int cellX = PosX + Position.x * (CELL_SIZE + PADDING);
-    int cellY = PosY + Position.y * (CELL_SIZE + PADDING);
+    Vector2 CellV;
+    CellV.x = PosX + Position.x * (CELL_SIZE + PADDING);
+    CellV.y = PosY + Position.y * (CELL_SIZE + PADDING);
 
-    Rectangle cellRect = {cellX, cellY, CELL_SIZE, CELL_SIZE};
+    Rectangle cellRect = {CellV.x, CellV.y, float(CELL_SIZE), float(CELL_SIZE)};
     DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);
     return cellRect;
 }

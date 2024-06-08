@@ -23,10 +23,14 @@ int main()
     InitWindow(screenWidth, screenHeight, "SerpientesyEscaleras");
     SetTargetFPS(60);
     srand(time(NULL));
-    Vector2 a;
-    a.x = -1;
-    int b = a.x;
+    // Variable inutilizada
+    // Vector2 a;
+    // a.x = -1;
+    // int b = a.x;
     Board Tablero;
+    // we define the texture of the snake
+    Tablero.DefineSnakeTexture();
+    
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -39,5 +43,7 @@ int main()
         EndDrawing();
     }
     CloseWindow();
+
+    Tablero.FreeSnakeTexture();
     return 0;
 }

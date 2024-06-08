@@ -24,7 +24,6 @@ Board::Board(short int NumPlayers)
 
 void Board::DrawBoard(int PosX, int PosY)
 {
-
     // Ciclo para recorrer filas
     for (int i = 0; i < 10; i++)
     {
@@ -32,8 +31,8 @@ void Board::DrawBoard(int PosX, int PosY)
         for (int j = 0; j < 10; j++)
         {
             // Calcula las coordenadas de la celda
-            int cellX = PosX + j * (CELL_SIZE + PADDING);
-            int cellY = PosY + i * (CELL_SIZE + PADDING);
+            float cellX = PosX + j * (CELL_SIZE + PADDING);
+            float cellY = PosY + i * (CELL_SIZE + PADDING);
 
             // Define el rectángulo de la celda
             Rectangle cellRect = {cellX, cellY, CELL_SIZE, CELL_SIZE};
@@ -64,6 +63,14 @@ void Board::MovePlayer()
     players[1].Move(1);
     players[2].Move(3);
     players[3].Move(4);
+}
+
+void Board::DefineSnakeTexture(){
+    this->snakes.DefineSkin();
+}
+
+void Board::FreeSnakeTexture(){
+    this->snakes.FreeSkin();
 }
 
 //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
