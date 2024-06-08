@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "Board.h"
 
 /*      POOYECTO-SNAKE AND LADDERS
@@ -28,19 +29,34 @@ int main()
     // a.x = -1;
     // int b = a.x;
     
-    Board Tablero(2);
+    int PlayerPlaying=2;
+
+    Board Tablero(PlayerPlaying);
     // we define the texture of the snake
     Tablero.DefineSnakeTexture();
     
-    
+    Dice dado;
+    int playerTurn=0;
+    int playerMove=0;
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(GRAY);
         Tablero.DrawBoard(320, 80);
+        
+        
         if (IsKeyPressed(KEY_D))
         {
-            Tablero.MovePlayer();
+            playerMove = dado.DropDice();
+            
+            Tablero.MovePlayer(playerTurn,playerMove);
+            
+            playerTurn++;
+            
+            if(playerTurn >= PlayerPlaying){
+                playerTurn=0;
+            }
         }
         EndDrawing();
     }

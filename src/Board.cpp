@@ -21,7 +21,7 @@ Board::Board(short int NumPlayers)
     for (int i = 0; i < NumPlayers; i++)
     {
         Player Temp = {NumPlayers, colorsP[i]}; // Inicializa jugador
-        Temp.DefineSkin();
+        Temp.DefineSkin();                      // definimos la skin predeteminada, tengo pensado hacer una para cada jugador
         players.push_back(Temp);                // Almacena jugador en vector
     }
 
@@ -48,6 +48,7 @@ void Board::DrawBoard(int PosX, int PosY)
 
         // Dibujado de serpiente y de escalera
 
+        // Dibujamos los jugadores
         for (int k = 0; k < NumPlayers; k++)
         {
             Rectangle ActColision = players[k].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING); // Variable que almacena el rectangulo del jugador actual
@@ -73,6 +74,10 @@ void Board::MovePlayer()
     players[1].Move(1);
     players[2].Move(3);
     players[3].Move(4);
+}
+
+void Board::MovePlayer(int NumPlayer,int boxes){
+    players[NumPlayer].Move(boxes);
 }
 
 // --------------------- Textures --------------------- //
