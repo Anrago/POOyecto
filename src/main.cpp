@@ -26,7 +26,7 @@ int main()
     Vector2 a;
     a.x = -1;
     int b = a.x;
-    Board Tablero = {4};
+    Board Tablero;
     // Tablero.InitPlayer(1,GREEN);
     while (!WindowShouldClose())
     {

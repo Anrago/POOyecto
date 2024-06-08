@@ -16,13 +16,18 @@ class Board
 private:
     Snake snakes;
     Ladder ladders;
-    vector <Player> players;
+    vector<Player> players;
     Dice dices;
     short int NumPlayers;
+
 public:
     Board();
     Board(short int NumPlayers);
     void DrawBoard(int PosX, int PosY);
     void MovePlayer();
 
+    //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
+    // void CasePlayers(Player *J1, Player *J2, int PosX, int PosY);
+    // void CasePlayers(Player *J1, Player *J2, Player *J3, int PosX, int PosY);
+    // void CasePlayers(Player *J1, Player *J2, Player *J3, Player *J4 , int PosX, int PosY);
 };
