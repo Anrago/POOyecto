@@ -2,13 +2,17 @@
 #include "Dice.h"
 class Player
 {
-private:
+public:
     short int NumPlayer;
     Color PlayerColor;
-    Vector2 Position;
-public:
+    Texture2D skin;
+    Vector2 Position = {0,9};
+    
     Player(short int NumPlayer=1,Color PlayerColor = BLUE);
-    Vector2 Move(int NumCas);
+    Rectangle DrawPlayer(int PosX, int PosY,int CELL_SIZE, int PADDING);
+    void Move(int NumCas);
+    void DefineSkin();
     //virtual int Roll();
+
 
 };
