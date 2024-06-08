@@ -16,7 +16,7 @@ class Board
 private:
     vector <Snake> snakes;
     vector <Ladder> ladders;
-    vector<Player> players;
+    vector <Player> players;
     Dice dices;
     short int NumPlayers;
 

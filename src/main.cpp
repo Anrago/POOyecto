@@ -43,7 +43,7 @@ int main()
     {
         BeginDrawing();
         ClearBackground(GRAY);
-        Tablero.DrawBoard(320, 80);
+        Tablero.DrawBoard(120, 80);
         
         
         if (IsKeyPressed(KEY_D))

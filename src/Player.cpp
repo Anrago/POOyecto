@@ -18,7 +18,7 @@ void Player::Move(int NumCas)
         {
             Position.x--;
         }
-
+//--------------------------------
         if ((int)Position.x == 10)
         {
             Position.y--;

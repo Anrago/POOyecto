@@ -18,6 +18,7 @@ Board::Board(short int NumPlayers)
 {
     Color colorsP[4] = {BLUE, RED, GREEN, YELLOW}; // Colores de jugadores
     this->NumPlayers = NumPlayers;
+
     for (int i = 0; i < NumPlayers; i++)
     {
         Player Temp = {NumPlayers, colorsP[i]}; // Inicializa jugador
@@ -54,11 +55,12 @@ void Board::DrawBoard(int PosX, int PosY)
             Rectangle ActColision = players[k].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING); // Variable que almacena el rectangulo del jugador actual
             for (int x = 0; x < 2; x++)
             {
-                Rectangle CollisionS = snakes[x].DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
-                Rectangle CollisionL = ladders[x].DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
-                if (CheckCollisionRecs(ActColision, CollisionS)) // Verifica colision entre jugador y serpiente
+                Rectangle Tail = snakes[x].DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
+                Rectangle Base = ladders[x].DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
+
+                if (CheckCollisionRecs(ActColision, Tail)) // Verifica colision entre jugador y serpiente
                     players[k].Position = snakes[x].Header;
-                if (CheckCollisionRecs(ActColision, CollisionL)) // Verifica colision entre jugador y escalera
+                if (CheckCollisionRecs(ActColision, Base)) // Verifica colision entre jugador y escalera
                     players[k].Position = ladders[x].Destiny;
             }
         }
@@ -76,22 +78,43 @@ void Board::MovePlayer()
     players[3].Move(4);
 }
 
-void Board::MovePlayer(int NumPlayer,int boxes){
+void Board::MovePlayer(int NumPlayer, int boxes)
+{
     players[NumPlayer].Move(boxes);
 }
 
 // --------------------- Textures --------------------- //
 
-void Board::DefineSnakeTexture(){
-    this->snakes.DefineSkin();
+void Board::DefineSnakeTexture()
+{
+    for (int i = 0; i < 2; i++)
+        this->snakes[i].DefineSkin();
 }
 
-void Board::FreeSnakeTexture(){
-    this->snakes.FreeSkin();
+void Board::FreeSnakeTexture()
+{
+    for (int i = 0; i < 2; i++)
+        this->snakes[i].FreeSkin();
 }
 
-void Board:: DefinePlayerSkinGhost(){
-    
+void Board::InitSnakes()
+{
+    Snake temp = {{5, 9}, {6, 5}}; // Primero cola luego cabeza
+    snakes.push_back(temp);
+    temp = {{3, 9}, {8, 2}};
+    snakes.push_back(temp);
+}
+
+void Board::InitLadders()
+{
+    Ladder temp = {{5, 2}, {6, 8}}; // Primero base luego destino
+    ladders.push_back(temp);
+    temp = {{9, 3}, {5, 6}};
+    ladders.push_back(temp);
+}
+
+void Board::DefinePlayerSkinGhost()
+{
 }
 
 //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
@@ -101,12 +124,12 @@ void Board:: DefinePlayerSkinGhost(){
 //     Rectangle CollisionJ1 = J1->DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
 //     Rectangle CollisionJ2 = J2->DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
 
-//     if (CheckCollisionRecs(CollisionJ1, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ1, Tail))
 //         J1->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ1, CollisionL))
 //         J1->Position = ladders.Destiny;
 
-//     if (CheckCollisionRecs(CollisionJ2, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ2, Tail))
 //         J2->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ2, CollisionL))
 //         J2->Position = ladders.Destiny;
@@ -118,20 +141,20 @@ void Board:: DefinePlayerSkinGhost(){
 //     Rectangle CollisionJ2 = J2->DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
 //     Rectangle CollisionJ3 = J3->DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
 
-//     Rectangle CollisionS = snakes.DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
+//     Rectangle Tail = snakes.DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
 //     Rectangle CollisionL = ladders.DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
 
-//     if (CheckCollisionRecs(CollisionJ1, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ1, Tail))
 //         J1->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ1, CollisionL))
 //         J1->Position = ladders.Destiny;
 
-//     if (CheckCollisionRecs(CollisionJ2, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ2, Tail))
 //         J2->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ2, CollisionL))
 //         J2->Position = ladders.Destiny;
 
-//     if (CheckCollisionRecs(CollisionJ3, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ3, Tail))
 //         J3->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ3, CollisionL))
 //         J3->Position = ladders.Destiny;
@@ -144,25 +167,25 @@ void Board:: DefinePlayerSkinGhost(){
 //     Rectangle CollisionJ3 = J3->DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
 //     Rectangle CollisionJ4 = J4->DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
 
-//     Rectangle CollisionS = snakes.DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
+//     Rectangle Tail = snakes.DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
 //     Rectangle CollisionL = ladders.DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
 
-//     if (CheckCollisionRecs(CollisionJ1, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ1, Tail))
 //         J1->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ1, CollisionL))
 //         J1->Position = ladders.Destiny;
 
-//     if (CheckCollisionRecs(CollisionJ2, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ2, Tail))
 //         J2->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ2, CollisionL))
 //         J2->Position = ladders.Destiny;
 
-//     if (CheckCollisionRecs(CollisionJ3, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ3, Tail))
 //         J3->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ3, CollisionL))
 //         J3->Position = ladders.Destiny;
 
-//     if (CheckCollisionRecs(CollisionJ4, CollisionS))
+//     if (CheckCollisionRecs(CollisionJ4, Tail))
 //         J4->Position = snakes.Header;
 //     if (CheckCollisionRecs(CollisionJ4, CollisionL))
 //         J4->Position = ladders.Destiny;
