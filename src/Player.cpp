@@ -39,10 +39,17 @@ Rectangle Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
     CellV.y = PosY + Position.y * (CELL_SIZE + PADDING);
 
     Rectangle cellRect = {CellV.x, CellV.y, float(CELL_SIZE), float(CELL_SIZE)};
+
+
     DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);
+    
+    DrawTextureEx(this->skin,CellV,0.0f,1.0f,WHITE);
     return cellRect;
 }
 
+void Player::DefineSkin(){
+    this->skin = LoadTexture("../assets/players/Ghost.png");
+}
 
 // Player::Roll()
 // {

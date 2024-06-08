@@ -18,6 +18,7 @@ Board::Board(short int NumPlayers)
     for (int i = 0; i < NumPlayers; i++)
     {
         Player Temp = {NumPlayers, colorsP[i]}; // Inicializa jugador
+        Temp.DefineSkin();
         players.push_back(Temp);                // Almacena jugador en vector
     }
 }
@@ -53,7 +54,7 @@ void Board::DrawBoard(int PosX, int PosY)
         }
 
         // CasePlayers(&players[0], &players[1], &players[2], &players[3], PosX, PosY);
-        std::cout << NumPlayers << std::endl;
+        // std::cout << NumPlayers << std::endl;
     }
 }
 
@@ -65,12 +66,18 @@ void Board::MovePlayer()
     players[3].Move(4);
 }
 
+// --------------------- Textures --------------------- //
+
 void Board::DefineSnakeTexture(){
     this->snakes.DefineSkin();
 }
 
 void Board::FreeSnakeTexture(){
     this->snakes.FreeSkin();
+}
+
+void Board:: DefinePlayerSkinGhost(){
+    
 }
 
 //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
