@@ -25,6 +25,11 @@ public:
     Board(short int NumPlayers);
     void DrawBoard(int PosX, int PosY);
     void MovePlayer();
+    // --------- Textures --------- //
+    // Players
+    void DefinePlayerSkinGhost();
+    
+    // Snake
     void DefineSnakeTexture();
     void FreeSnakeTexture();
     void InitSnakes();

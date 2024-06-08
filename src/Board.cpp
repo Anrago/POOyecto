@@ -21,6 +21,7 @@ Board::Board(short int NumPlayers)
     for (int i = 0; i < NumPlayers; i++)
     {
         Player Temp = {NumPlayers, colorsP[i]}; // Inicializa jugador
+        Temp.DefineSkin();
         players.push_back(Temp);                // Almacena jugador en vector
     }
 
@@ -62,6 +63,7 @@ void Board::DrawBoard(int PosX, int PosY)
         }
 
         // CasePlayers(&players[0], &players[1], &players[2], &players[3], PosX, PosY);
+        // std::cout << NumPlayers << std::endl;
     }
 }
 
@@ -73,32 +75,18 @@ void Board::MovePlayer()
     players[3].Move(4);
 }
 
-void Board::DefineSnakeTexture()
-{
-    this->snakes[1].DefineSkin();
-    this->snakes[0].DefineSkin();
+// --------------------- Textures --------------------- //
+
+void Board::DefineSnakeTexture(){
+    this->snakes.DefineSkin();
 }
 
-void Board::FreeSnakeTexture()
-{
-    this->snakes[1].FreeSkin();
-    this->snakes[0].DefineSkin();
+void Board::FreeSnakeTexture(){
+    this->snakes.FreeSkin();
 }
 
-void Board::InitSnakes()
-{
-    Snake temp = {{6, 8}, {2, 5}};
-    snakes.push_back(temp);
-    temp = {{9, 5}, {6, 2}};
-    snakes.push_back(temp);
-}
-
-void Board::InitLadders()
-{
-    Ladder temp = {{6, 5}, {5, 9}};
-    ladders.push_back(temp);
-    temp = {{5, 2}, {3, 6}};
-    ladders.push_back(temp);
+void Board:: DefinePlayerSkinGhost(){
+    
 }
 
 //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------

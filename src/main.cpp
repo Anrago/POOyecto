@@ -27,9 +27,11 @@ int main()
     // Vector2 a;
     // a.x = -1;
     // int b = a.x;
-    Board Tablero;
+    
+    Board Tablero(2);
     // we define the texture of the snake
     Tablero.DefineSnakeTexture();
+    
     
     while (!WindowShouldClose())
     {
