@@ -14,8 +14,8 @@ using std::vector;
 class Board
 {
 private:
-    Snake snakes;
-    Ladder ladders;
+    vector <Snake> snakes;
+    vector <Ladder> ladders;
     vector<Player> players;
     Dice dices;
     short int NumPlayers;
@@ -27,7 +27,8 @@ public:
     void MovePlayer();
     void DefineSnakeTexture();
     void FreeSnakeTexture();
-
+    void InitSnakes();
+    void InitLadders();
     //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
     // void CasePlayers(Player *J1, Player *J2, int PosX, int PosY);
     // void CasePlayers(Player *J1, Player *J2, Player *J3, int PosX, int PosY);
