@@ -8,28 +8,46 @@ Player::Player(short int NumPlayer, Color PlayerColor)
 
 void Player::Move(int NumCas)
 {
+    bool retur = false;
     for (int i = 0; i < NumCas; i++)
     {
-        if ((int)Position.y % 2 == 1)
-        {
-            Position.x++;
+        if((int)Position.y == 0){
+            if(Position.x == 0 || retur == true){
+                retur = true;
+                Position.x++;
+            }
+            else
+            {
+                Position.x--;
+            }
         }
-        if ((int)Position.y % 2 == 0)
+        else
         {
-            Position.x--;
-        }
-//--------------------------------
-        if ((int)Position.x == 10)
-        {
-            Position.y--;
-            Position.x--;
-        }
-        if ((int)Position.x == -1)
-        {
-            Position.y--;
-            Position.x++;
+            if ((int)Position.y % 2 == 1)
+            {
+                Position.x++;
+            }
+            if ((int)Position.y % 2 == 0)
+            {
+                Position.x--;
+            }
+    //--------------------------------
+            if ((int)Position.x == 10)
+            {
+                Position.y--;
+                Position.x--;
+            }
+            if ((int)Position.x == -1)
+            {
+                Position.y--;
+                Position.x++;
+            }
         }
     }
+}
+
+Vector2 Player::GetPosition(){
+    return this->Position;
 }
 
 Rectangle Player::BoxPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)

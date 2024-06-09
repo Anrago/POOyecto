@@ -56,7 +56,7 @@ int main()
     int NumDice=2;
 
     // Escena actual
-    Screen currentScreen=WINNERS;
+    Screen currentScreen=GAME;
 
     bool exit = false;
     while (!WindowShouldClose() && exit == false)
@@ -74,11 +74,13 @@ int main()
         }
         case GAME:
         {
-            DrawGame(screenWidth,screenHeight,PlayerPlaying,NumDice,Tablero,dado);
+            winner = DrawGame(screenWidth,screenHeight,PlayerPlaying,NumDice,Tablero,dado);
+            currentScreen = WINNERS;
             break;
         }
         case WINNERS:
         {
+            std::cout << winner<< std::endl;
             currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayerPlaying,winner);
             break;
         }
@@ -228,17 +230,13 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
     float timetolive=1.0f;
     float actualtime=0.0f;
 
-    bool finish = false;
-
     // Mascara
     Color maskColor = {1,1,1,50};
     Rectangle maskV = {0,0,float(screenWidth),float(screenHeight)};
 
-    /*
-        
-        Dibujar una forma de mostrar el ganador,
-        Sonidos
-    */
+    Vector2 PlayerPosition;
+
+    bool finish = false;
 
     while(finish == false){
         BeginDrawing();
@@ -250,15 +248,16 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
                     // tira el dado
                     playerMove = dado.DropDice();
 
+
                     itoa(playerMove,diceResultado,10);
                     
-                    // reiniciamos el contador
-                    actualtime=0.0f;
-
                     Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
                     TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
 
                     int op=50;
+
+                    // reiniciamos el contador
+                    actualtime=0.0f;
 
                     // mostramos el mensaje por 1.0 segnudos
                     while(actualtime <=timetolive){
@@ -302,6 +301,14 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
                     // Movemos el jugador
                     Tablero.MovePlayer(playerTurn,playerMove);
                     
+                    // Regresa la posicion actual del jugador
+                    PlayerPosition=Tablero.GetActualPlayerPosition(playerTurn);
+
+                    // Si es 0 0 Gano
+                    if(PlayerPosition.x == 0 && PlayerPosition.y == 0){
+                        return playerTurn;
+                    }
+                    
                     // Cambiamos de turno
                     playerTurn++;
                     
@@ -315,6 +322,7 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
 
         EndDrawing();
     }
+    return 0;
 }
 
 Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, int winner){
@@ -365,7 +373,7 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
     // -------------- Winner -------------- // 
 
     // Texture2D winnerT= Tablero.GetPlayerSkin(winner);
-    Texture2D winnerT= LoadTexture("../assets/players/Ghost.png");
+    Texture2D winnerT= Tablero.GetPlayerSkin(winner);
 
     Vector2 PlayerWinnerV;
     PlayerWinnerV.x = (screenWidth /2 ) - (winnerT.width*5 / 2);

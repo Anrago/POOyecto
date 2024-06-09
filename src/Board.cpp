@@ -104,6 +104,10 @@ void Board::MovePlayer(int NumPlayer, int boxes)
     players[NumPlayer].Move(boxes);
 }
 
+Vector2 Board:: GetActualPlayerPosition(int NumPlayer){
+    return players[NumPlayer].Position;
+}
+
 // --------------------- Textures --------------------- //
 
 Texture2D Board::GetPlayerSkin(int NumPlayer){

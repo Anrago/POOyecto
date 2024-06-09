@@ -18,6 +18,8 @@ public:
     void DefineSkin();
     void DefineSkin2();
 
+    Vector2 GetPosition();
+
     //virtual int Roll();
 
 

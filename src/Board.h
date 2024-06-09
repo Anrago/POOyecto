@@ -31,6 +31,7 @@ public:
     // Players
     void DefinePlayerSkinGhost();
     Texture2D GetPlayerSkin(int NumPlayer);
+    Vector2 GetActualPlayerPosition(int NumPlayer);
     
     // Snake
     void DefineSnakeTexture();
