@@ -41,7 +41,7 @@ int main()
     srand(time(NULL));
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
-    int PlayerPlaying=1;
+    int PlayerPlaying=2;
     
     // Tablero
     Board Tablero(PlayerPlaying);
