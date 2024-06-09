@@ -17,6 +17,8 @@ public:
     void Move(int NumCas);
     void DefineSkin();
     void DefineSkin2();
+    void DefineSkin3();
+    void DefineSkin4();
 
     Vector2 GetPosition();
 

@@ -26,8 +26,12 @@ Board::Board(short int NumPlayers)
         // Esto luego lo muevo es solo para calar diferentes skins, o capas y lo dejo juasjuas
         if(i == 0){
             Temp.DefineSkin();
-        }else{
+        }else if(i==1){
             Temp.DefineSkin2();
+        }else if(i==2){
+            Temp.DefineSkin3();
+        }else if(i == 3){
+            Temp.DefineSkin4();
         }
 
         players.push_back(Temp);                // Almacena jugador en vector

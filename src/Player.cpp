@@ -85,6 +85,13 @@ void Player::DefineSkin2(){
     this->skin = LoadTexture("../assets/players/GhostGirl.png");
 }
 
+void Player::DefineSkin3(){
+    this->skin = LoadTexture("../assets/players/GhostPesado.png");
+}
+void Player::DefineSkin4(){
+    this->skin = LoadTexture("../assets/players/GhostFrio.png");
+}
+
 // Player::Roll()
 // {
 //     return Dice::Roll();

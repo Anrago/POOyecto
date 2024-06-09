@@ -41,7 +41,7 @@ int main()
     srand(time(NULL));
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
-    int PlayerPlaying=2;
+    int PlayerPlaying=4;
 
     int winner=0;
     
