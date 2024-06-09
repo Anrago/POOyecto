@@ -16,6 +16,7 @@ public:
     
     void Move(int NumCas);
     void DefineSkin();
+    void DefineSkin2();
 
     //virtual int Roll();
 

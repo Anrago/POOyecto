@@ -7,7 +7,7 @@
 
 #define COLUMNS 10
 #define ROWS 10
-#define CELL_SIZE 40
+#define CELL_SIZE 50
 #define PADDING 10
 
 using std::vector;
@@ -30,6 +30,7 @@ public:
     // --------- Textures --------- //
     // Players
     void DefinePlayerSkinGhost();
+    Texture2D GetPlayerSkin(int NumPlayer);
     
     // Snake
     void DefineSnakeTexture();

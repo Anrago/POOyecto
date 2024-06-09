@@ -41,7 +41,7 @@ int main()
     srand(time(NULL));
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
-    int PlayerPlaying=2;
+    int PlayerPlaying=1;
     
     // Tablero
     Board Tablero(PlayerPlaying);
@@ -51,7 +51,7 @@ int main()
     // Dados
     Dice dado;
     // Numero de dados con los que juagaran, igual se actualizaria en players select
-    int NumDice=1;
+    int NumDice=2;
 
     // Escena actual
     Screen currentScreen=MENU;
@@ -187,6 +187,8 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
     // ------------ Recursos ------------ //
     
     Texture2D background = LoadTexture("../assets/GameBackground.png");
+    
+    Texture2D Dice = LoadTexture("../assets/DiceJoin.png");
 
     Font fuente = LoadFont("../assets/fuente/Minecraft.ttf");
 
@@ -199,8 +201,15 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
     playerV.y= screenHeight *0.13;
     
     Vector2 diceV;
-    diceV.x= screenWidth *0.78;
-    diceV.y= screenHeight *0.50;
+    diceV.x= (screenWidth *0.50) - 41;
+    diceV.y= (screenHeight *0.50) - 41;
+    
+    Vector2 TdiceV;
+    TdiceV.x= (screenWidth *0.55) - (Dice.width / 2);
+    TdiceV.y= (screenHeight *0.65) - (Dice.height / 2);
+
+    Vector2 TplayerV;
+    TplayerV.x = screenWidth *0.20;
 
     char diceResultado[3];
     
@@ -214,9 +223,12 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
 
     bool finish = false;
 
+    // Mascara
+    Color maskColor = {1,1,1,50};
+    Rectangle maskV = {0,0,float(screenWidth),float(screenHeight)};
+
     /*
-        Dibujar el turno del jugador, osea el numero y skin del jugador acutal tirando
-        Dibujar una forma de representar cuanto dio el resultado de los dados en el vacio de la derecha
+        
         Dibujar una forma de mostrar el ganador,
         Sonidos
     */
@@ -224,9 +236,9 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
     while(finish == false){
         BeginDrawing();
             DrawTexture(background,0,0,WHITE);
-            Tablero.DrawBoard(100, 100);
+            Tablero.DrawBoard(100, 60);
                     
-                if (IsKeyPressed(KEY_D))
+                if (IsKeyPressed(KEY_SPACE))
                 {
                     // tira el dado
                     playerMove = dado.DropDice();
@@ -236,12 +248,46 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
                     // reiniciamos el contador
                     actualtime=0.0f;
 
+                    Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+                    TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
+
+                    int op=50;
+
                     // mostramos el mensaje por 1.0 segnudos
                     while(actualtime <=timetolive){
                         BeginDrawing();
-                            actualtime+=GetFrameTime();
-                            DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                            DrawTexture(background,0,0,WHITE);
+                            Tablero.DrawBoard(100, 60);
+                            
+                            /*
+                                Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
+                                opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
+                                o tambien podria ser cierta cantidad de opacidad
+                            */
+                            if(actualtime <= 0.15f){
+                                // Jugador actual
+                                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                                // Mascara
+                                DrawRectangleRec(maskV,maskColor);
+                                op+=10;
+                                maskColor = {1,1,1,op};
+                            }
+                            else
+                            {
+                                // Jugador actual
+                                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                                // Mascara
+                                DrawRectangleRec(maskV,maskColor);
+                            }
+                            
+                            // Dados
+                            DrawTextureEx(Dice,TdiceV,0.0f,0.5f,WHITE);
+                            // Jugador
+                            DrawTextureEx(PlayerSkin,TplayerV,0.0f,4.0f,WHITE);
+                            // Resultado arrojado
                             DrawTextEx(fuente,diceResultado,diceV,82,1,WHITE);
+
+                            actualtime+=GetFrameTime();
 
                         EndDrawing();
                     }
@@ -257,6 +303,9 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
                         playerTurn=0;
                     }
                 }
+                
+                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+
         EndDrawing();
     }
 }

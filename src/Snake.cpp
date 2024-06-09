@@ -14,9 +14,9 @@ Snake::Snake(Vector2 Header, Vector2 Tail)
 
 Rectangle Snake::DrawSnake(int PosX, int PosY, int CELL_SIZE, int PADDING)
 {
-    Vector2 CellHeaderV;
-    CellHeaderV.x=PosX + Header.x * (float(CELL_SIZE) + PADDING);
-    CellHeaderV.y=PosY + Header.y * (float(CELL_SIZE) + PADDING);
+    // Vector2 CellHeaderV;
+    // CellHeaderV.x=PosX + Header.x * (float(CELL_SIZE) + PADDING);
+    // CellHeaderV.y=PosY + Header.y * (float(CELL_SIZE) + PADDING);
     
     Vector2 CellTailV;
     CellTailV.x=PosX + Tail.x * (float(CELL_SIZE) + PADDING);
@@ -27,10 +27,10 @@ Rectangle Snake::DrawSnake(int PosX, int PosY, int CELL_SIZE, int PADDING)
     
     Rectangle CellTailR = {CellTailV.x, CellTailV.y, float(CELL_SIZE), float(CELL_SIZE)};
     
-    // Head
-    DrawTextureEx(this->skin,CellHeaderV,0.0f,1.0f,WHITE);
-    // Tail
-    DrawTextureEx(this->skin,CellTailV,0.0f,1.0f,WHITE);
+    // // Head
+    // DrawTextureEx(this->skin,CellHeaderV,0.0f,1.0f,WHITE);
+    // // Tail
+    // DrawTextureEx(this->skin,CellTailV,0.0f,1.0f,WHITE);
 
     // DrawRectangle(CellHeaderR.x, CellHeaderR.y, CellHeaderR.width, CellHeaderR.height, DARKGREEN);
     // DrawRectangle(CellTailR.x, CellTailR.y, CellTailR.width, CellTailR.height, GREEN);
