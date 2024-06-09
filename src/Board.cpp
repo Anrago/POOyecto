@@ -52,7 +52,7 @@ void Board::DrawBoard(int PosX, int PosY)
         // Dibujamos los jugadores
         for (int k = 0; k < NumPlayers; k++)
         {
-            Rectangle ActColision = players[k].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING); // Variable que almacena el rectangulo del jugador actual
+            Rectangle ActColision = players[k].BoxPlayer(PosX, PosY, CELL_SIZE, PADDING); // Variable que almacena el rectangulo del jugador actual
             for (int x = 0; x < 1; x++) // El limite sera el numero maximo de serpientes y escaleras, pero no sumadas
             {
                 Rectangle Tail = snakes[x].DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
@@ -64,10 +64,14 @@ void Board::DrawBoard(int PosX, int PosY)
                 if (CheckCollisionRecs(ActColision, Base)) // Verifica colision entre jugador y escalera
                     players[k].Position = ladders[x].Destiny;
             }
+            players[k].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING);
         }
-
-        // CasePlayers(&players[0], &players[1], &players[2], &players[3], PosX, PosY);
-        // std::cout << NumPlayers << std::endl;
+        /*
+            Podria separar los draw, osea del snake y ladder, un ciclo para dibujar estas primero, luego otra para obtener
+            su posicion actual para las colisiones, asi evitaria que se sobrepongan encima de los jugadores, PERO
+            si se supone que usaremos el mapa con las serpientes pues mejor que la funcion drawnsake solo
+            retorne la posicion actual
+        */
     }
 }
 

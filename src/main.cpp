@@ -28,6 +28,7 @@ typedef enum Screen{
 Screen DrawMenu(int screenWidth, int screenHeight);
 void DrawExit(int screenWidth, int screenHeight);
 void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
+void Wait3Seconds();
 
 // ---------------------- Main ---------------------- //
 int main()
@@ -183,11 +184,33 @@ void DrawExit(int screenWidth, int screenHeight){
 }
 
 void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
+    // ------------ Recursos ------------ //
+    
     Texture2D background = LoadTexture("../assets/GameBackground.png");
+
+    Font fuente = LoadFont("../assets/fuente/Minecraft.ttf");
+
+    // ----------- Textos ------------- //
+    char actualPlayer[4][10] = {"Player 1","Player 2","Player 3","Player 4"};
+
+    // Posicion del texto
+    Vector2 playerV;
+    playerV.x= screenWidth *0.69;
+    playerV.y= screenHeight *0.13;
+    
+    Vector2 diceV;
+    diceV.x= screenWidth *0.78;
+    diceV.y= screenHeight *0.50;
+
+    char diceResultado[3];
     
     // turno y movimiento de jugadores
     int playerTurn=0;
     int playerMove=0;
+
+    // tiempo de espera
+    float timetolive=1.0f;
+    float actualtime=0.0f;
 
     bool finish = false;
 
@@ -201,16 +224,35 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
     while(finish == false){
         BeginDrawing();
             DrawTexture(background,0,0,WHITE);
-            Tablero.DrawBoard(80, 80);
+            Tablero.DrawBoard(100, 100);
                     
                 if (IsKeyPressed(KEY_D))
                 {
+                    // tira el dado
                     playerMove = dado.DropDice();
+
+                    itoa(playerMove,diceResultado,10);
                     
+                    // reiniciamos el contador
+                    actualtime=0.0f;
+
+                    // mostramos el mensaje por 1.0 segnudos
+                    while(actualtime <=timetolive){
+                        BeginDrawing();
+                            actualtime+=GetFrameTime();
+                            DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                            DrawTextEx(fuente,diceResultado,diceV,82,1,WHITE);
+
+                        EndDrawing();
+                    }
+
+                    // Movemos el jugador
                     Tablero.MovePlayer(playerTurn,playerMove);
                     
+                    // Cambiamos de turno
                     playerTurn++;
                     
+                    // en caso de llegar al fin de los jugadores reiniciamos los turnos
                     if(playerTurn >= NumPlayers){
                         playerTurn=0;
                     }

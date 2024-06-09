@@ -32,7 +32,7 @@ void Player::Move(int NumCas)
     }
 }
 
-Rectangle Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
+Rectangle Player::BoxPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
 {
     Vector2 CellV;
     CellV.x = PosX + Position.x * (CELL_SIZE + PADDING);
@@ -41,10 +41,23 @@ Rectangle Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
     Rectangle cellRect = {CellV.x, CellV.y, float(CELL_SIZE), float(CELL_SIZE)};
 
 
+    // DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);
+    
+    // DrawTextureEx(this->skin,CellV,0.0f,1.0f,WHITE);
+    return cellRect;
+}
+
+void Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
+{
+    Vector2 CellV;
+    CellV.x = PosX + Position.x * (CELL_SIZE + PADDING);
+    CellV.y = PosY + Position.y * (CELL_SIZE + PADDING);
+
+    Rectangle cellRect = {CellV.x, CellV.y, float(CELL_SIZE), float(CELL_SIZE)};
+
     DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);
     
     DrawTextureEx(this->skin,CellV,0.0f,1.0f,WHITE);
-    return cellRect;
 }
 
 void Player::DefineSkin(){
