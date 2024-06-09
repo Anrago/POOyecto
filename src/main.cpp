@@ -27,8 +27,8 @@ typedef enum Screen{
 // ---------------------- Prototipos ---------------------- //
 Screen DrawMenu(int screenWidth, int screenHeight);
 void DrawExit(int screenWidth, int screenHeight);
-void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
-void Wait3Seconds();
+int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
+Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, int winner);
 
 // ---------------------- Main ---------------------- //
 int main()
@@ -42,6 +42,8 @@ int main()
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
     int PlayerPlaying=2;
+
+    int winner=0;
     
     // Tablero
     Board Tablero(PlayerPlaying);
@@ -54,7 +56,7 @@ int main()
     int NumDice=2;
 
     // Escena actual
-    Screen currentScreen=MENU;
+    Screen currentScreen=WINNERS;
 
     bool exit = false;
     while (!WindowShouldClose() && exit == false)
@@ -73,6 +75,11 @@ int main()
         case GAME:
         {
             DrawGame(screenWidth,screenHeight,PlayerPlaying,NumDice,Tablero,dado);
+            break;
+        }
+        case WINNERS:
+        {
+            currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayerPlaying,winner);
             break;
         }
         case EXIT:
@@ -183,7 +190,7 @@ void DrawExit(int screenWidth, int screenHeight){
 
 }
 
-void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
+int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
     // ------------ Recursos ------------ //
     
     Texture2D background = LoadTexture("../assets/GameBackground.png");
@@ -308,4 +315,101 @@ void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Bo
 
         EndDrawing();
     }
+}
+
+Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, int winner){
+    // -------------- Recursos -------------- //
+
+    Font fuente = LoadFont("../assets/fuente/Minecraft.ttf");
+
+    Texture2D ButtonPlayAgain= LoadTexture("../assets/buttons/PlayAgain.png");
+    Texture2D ButtonExit= LoadTexture("../assets/buttons/ExitButton.png");
+
+    Color background = {56,56,56,255};
+    
+    // -------------- Text Position -------------- // 
+
+    const char winnerText[10] = {"WINNER"};
+
+    int winnerSize=MeasureText(winnerText,54);
+
+    Vector2 winnerV;
+    winnerV.x = (screenWidth / 2) - (winnerSize / 2)+20;
+    winnerV.y = screenHeight *0.20;
+
+    // -------------- Buttons Position -------------- // 
+
+    // Boton de jugar nuevamente
+    Rectangle PlayAgainR;
+    PlayAgainR.x = screenWidth *0.55;
+    PlayAgainR.y = screenHeight *0.80;
+    PlayAgainR.width = ButtonPlayAgain.width;
+    PlayAgainR.height = ButtonPlayAgain.height;
+
+    Vector2 playAgainV;
+    playAgainV.x = PlayAgainR.x;
+    playAgainV.y = PlayAgainR.y;
+    
+    
+    // Boton de salir
+    Rectangle ExitR;
+    ExitR.x = screenWidth *0.25;
+    ExitR.y = screenHeight *0.80;
+    ExitR.width = ButtonExit.width;
+    ExitR.height = ButtonExit.height;
+
+    Vector2 ExitV;
+    ExitV.x=ExitR.x;
+    ExitV.y=ExitR.y;
+
+    // -------------- Winner -------------- // 
+
+    // Texture2D winnerT= Tablero.GetPlayerSkin(winner);
+    Texture2D winnerT= LoadTexture("../assets/players/Ghost.png");
+
+    Vector2 PlayerWinnerV;
+    PlayerWinnerV.x = (screenWidth /2 ) - (winnerT.width*5 / 2);
+    PlayerWinnerV.y = (screenHeight /2 ) - (winnerT.height*5 / 2);
+
+    // -------------- Extra -------------- // 
+    
+    Vector2 mouse;
+    Vector2 click;
+
+    bool finish = false;
+
+    while(finish == false){
+        BeginDrawing();
+            mouse = GetMousePosition();
+            
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                click=mouse;
+            }
+
+            // Fondo
+            ClearBackground(background);
+            
+            // texto de ganador
+            DrawTextEx(fuente,winnerText,winnerV,54,1,YELLOW);
+
+            DrawTextureEx(winnerT,PlayerWinnerV,0.0f,5.0f,WHITE);
+            
+            
+            // Botones
+            // Jugar nuevamente
+            DrawTextureEx(ButtonPlayAgain,playAgainV,0.0f,1.0f,WHITE);
+            
+            // Salir
+            DrawTextureEx(ButtonExit,ExitV,0.0f,1.0f,WHITE);
+
+            if(CheckCollisionPointRec(click,PlayAgainR)){
+                return GAME;
+            }
+            if(CheckCollisionPointRec(click,ExitR)){
+                return MENU;
+            }
+
+        EndDrawing();
+    }
+    return MENU;
 }
