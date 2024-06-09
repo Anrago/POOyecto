@@ -27,6 +27,7 @@ typedef enum Screen{
 // ---------------------- Prototipos ---------------------- //
 Screen DrawMenu(int screenWidth, int screenHeight);
 void DrawExit(int screenWidth, int screenHeight);
+void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
 
 // ---------------------- Main ---------------------- //
 int main()
@@ -38,12 +39,8 @@ int main()
     SetTargetFPS(60);
     srand(time(NULL));
     
-    // Jugadores actuales jugando
+    // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
     int PlayerPlaying=2;
-
-    // turno y movimiento de jugadores
-    int playerTurn=0;
-    int playerMove=0;
     
     // Tablero
     Board Tablero(PlayerPlaying);
@@ -52,6 +49,8 @@ int main()
     
     // Dados
     Dice dado;
+    // Numero de dados con los que juagaran, igual se actualizaria en players select
+    int NumDice=1;
 
     // Escena actual
     Screen currentScreen=MENU;
@@ -72,23 +71,7 @@ int main()
         }
         case GAME:
         {
-            BeginDrawing();
-                ClearBackground(GRAY);
-                Tablero.DrawBoard(120, 80);
-                    
-                if (IsKeyPressed(KEY_D))
-                {
-                    playerMove = dado.DropDice();
-                    
-                    Tablero.MovePlayer(playerTurn,playerMove);
-                    
-                    playerTurn++;
-                    
-                    if(playerTurn >= PlayerPlaying){
-                        playerTurn=0;
-                    }
-                }
-            EndDrawing();
+            DrawGame(screenWidth,screenHeight,PlayerPlaying,NumDice,Tablero,dado);
             break;
         }
         case EXIT:
@@ -197,4 +180,41 @@ void DrawExit(int screenWidth, int screenHeight){
     }
     UnloadTexture(background);
 
+}
+
+void DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
+    Texture2D background = LoadTexture("../assets/GameBackground.png");
+    
+    // turno y movimiento de jugadores
+    int playerTurn=0;
+    int playerMove=0;
+
+    bool finish = false;
+
+    /*
+        Dibujar el turno del jugador, osea el numero y skin del jugador acutal tirando
+        Dibujar una forma de representar cuanto dio el resultado de los dados en el vacio de la derecha
+        Dibujar una forma de mostrar el ganador,
+        Sonidos
+    */
+
+    while(finish == false){
+        BeginDrawing();
+            DrawTexture(background,0,0,WHITE);
+            Tablero.DrawBoard(80, 80);
+                    
+                if (IsKeyPressed(KEY_D))
+                {
+                    playerMove = dado.DropDice();
+                    
+                    Tablero.MovePlayer(playerTurn,playerMove);
+                    
+                    playerTurn++;
+                    
+                    if(playerTurn >= NumPlayers){
+                        playerTurn=0;
+                    }
+                }
+        EndDrawing();
+    }
 }

@@ -53,7 +53,7 @@ void Board::DrawBoard(int PosX, int PosY)
         for (int k = 0; k < NumPlayers; k++)
         {
             Rectangle ActColision = players[k].DrawPlayer(PosX, PosY, CELL_SIZE, PADDING); // Variable que almacena el rectangulo del jugador actual
-            for (int x = 0; x < 2; x++)
+            for (int x = 0; x < 1; x++) // El limite sera el numero maximo de serpientes y escaleras, pero no sumadas
             {
                 Rectangle Tail = snakes[x].DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
                 Rectangle Base = ladders[x].DrawLadder(PosX, PosY, CELL_SIZE, PADDING);
