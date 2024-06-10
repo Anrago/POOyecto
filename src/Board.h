@@ -16,11 +16,11 @@ class Board
 private:
     vector <Snake> snakes;
     vector <Ladder> ladders;
-    vector <Player> players;
     Dice dices;
     short int NumPlayers;
 
 public:
+    vector <Player> players;
     Board();
     Board(short int NumPlayers);
     void DrawBoard(int PosX, int PosY);
