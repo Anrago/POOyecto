@@ -39,6 +39,9 @@ int main()
     int screenHeight = 720;
     InitWindow(screenWidth, screenHeight, "SerpientesyEscaleras");
     SetTargetFPS(60);
+    
+    InitAudioDevice();
+    
     srand(time(NULL));
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
@@ -86,9 +89,6 @@ int main()
         {
             Tablero.DefinePlayersPlaying(PlayersPlaying);
             winners = DrawGame(screenWidth,screenHeight,PlayersPlaying,NumDice,Tablero,dado);
-            for(int i =0 ; i<PlayersPlaying;i++){
-                std::cout<<winners[i]<<std::endl;
-            }
             if(winner == -1){
                 currentScreen = MENU;
             }
@@ -122,6 +122,10 @@ int main()
 // ---------------------- Menu y pantallas de movimiento ---------------------- //
 
 Screen DrawMenu(int screenWidth, int screenHeight){
+    // -------- Audio -------- //
+    Music musica = LoadMusicStream("../assets/musica/Stage1.mp3");
+
+    Sound clicks = LoadSound("../assets/sound/pk.mp3");
     
     // -------- Texturas -------- //
     Texture2D background = LoadTexture("../assets/MenuBackgroundClean.png");
@@ -161,9 +165,11 @@ Screen DrawMenu(int screenWidth, int screenHeight){
     Vector2 mouse;
     Vector2 click;
 
+    PlayMusicStream(musica);
 
     while (finish== false)
     {
+        UpdateMusicStream(musica);
         BeginDrawing();
             mouse=GetMousePosition();
 
@@ -181,15 +187,19 @@ Screen DrawMenu(int screenWidth, int screenHeight){
             
 
             if(CheckCollisionPointRec(click,StartR)){
+                PlaySound(clicks);
                 return PLAYER_SELECTION;
             }
             
             if(CheckCollisionPointRec(click,ExitR)){
+                PlaySound(clicks);
                 return EXIT;
             }
 
         EndDrawing();
     }
+    UnloadMusicStream(musica);
+    UnloadSound(clicks);
     return MENU;
 }
 
@@ -212,6 +222,12 @@ void DrawExit(int screenWidth, int screenHeight){
 std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
     // ------------ Recursos ------------ //
     
+    Music musica = LoadMusicStream("../assets/musica/AncientLake.mp3");
+
+    Sound tirar = LoadSound("../assets/sound/interactBOTW.mp3");
+
+    Sound winSound = LoadSound("../assets/sound/Ohhh.mp3");
+
     Texture2D background = LoadTexture("../assets/GameBackground.png");
     
     Texture2D Dice = LoadTexture("../assets/DiceJoin.png");
@@ -266,8 +282,18 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
     Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
     TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
 
+    // -------- Musica -------- //
+    PlayMusicStream(musica);
+
+    // volumen de musica
+    float volumen = 1.0f;
+    SetMusicVolume(musica,1.0f);
+    
     while(finish == false){
         BeginDrawing();
+            
+            UpdateMusicStream(musica);
+            
             if(IsKeyPressed(KEY_ESCAPE)){
                 return winners;
             }
@@ -281,8 +307,13 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                 }
             }
 
+            SetMusicVolume(musica,volumen);
+
                 if (IsKeyPressed(KEY_SPACE))
                 {
+                    // Sonido de tirar
+                    PlaySound(tirar);
+
                     // tira el dado
                     playerMove = dado.DropDice();
 
@@ -299,6 +330,8 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                     // mostramos el mensaje por 1.0 segnudos
                     while(actualtime <=timetolive){
                         BeginDrawing();
+
+                            UpdateMusicStream(musica);
                             
                             DrawTexture(background,0,0,WHITE);
                             Tablero.DrawBoard(100, 60);
@@ -309,12 +342,17 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                                 o tambien podria ser cierta cantidad de opacidad
                             */
                             if(actualtime <= 0.15f){
+                                // Musica
+                                volumen-=0.1f;
+                                SetMusicVolume(musica,volumen);
+                                
                                 // Jugador actual
                                 DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
                                 // Mascara
                                 DrawRectangleRec(maskV,maskColor);
                                 op+=10;
                                 maskColor = {1,1,1,op};
+                                // bajamos el volumen
                             }
                             else
                             {
@@ -335,6 +373,7 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
 
                         EndDrawing();
                     }
+                    volumen=1.0f;
 
                     // Movemos el jugador
                     Tablero.MovePlayer(playerTurn,playerMove);
@@ -344,11 +383,10 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
 
                     // Si es 0 0 Gano
                     if(PlayerPosition.x == 0 && PlayerPosition.y == 0){
-                        // std::cout<<"Turno "<<playerTurn<<std::endl;
-                        // std::cout<<"Posicion "<<wc<<std::endl;
-                        // std::cout<<"NumPlay "<<NumPlayers<<std::endl;
                         winners.push_back(playerTurn);
                         wc++;
+
+                        PlaySound(winSound);
 
                         Tablero.players[playerTurn].win = true;
                         
@@ -384,13 +422,19 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
 
         EndDrawing();
     }
+    UnloadMusicStream(musica);
     return winners;
 }
 
 Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner){
     // -------------- Recursos -------------- //
+    Sound win = LoadSound("../assets/sound/OHMYGOD.mp3");
+
+    Music musica = LoadMusicStream("../assets/musica/Victoria.mp3");
 
     Font fuente = LoadFont("../assets/fuente/Minecraft.ttf");
+
+    Sound clicks = LoadSound("../assets/sound/pk.mp3");
 
     Texture2D ButtonPlayAgain= LoadTexture("../assets/buttons/PlayAgain.png");
     Texture2D ButtonExit= LoadTexture("../assets/buttons/ExitButton.png");
@@ -483,8 +527,15 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
 
     bool finish = false;
 
+    PlayMusicStream(musica);
+
+    PlaySound(win);
+
     while(finish == false){
         BeginDrawing();
+            
+            UpdateMusicStream(musica);
+
             mouse = GetMousePosition();
             
             if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
@@ -522,9 +573,11 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
             DrawTextureEx(ButtonExit,ExitV,0.0f,1.0f,WHITE);
 
             if(CheckCollisionPointRec(click,PlayAgainR)){
+                PlaySound(clicks);
                 return GAME;
             }
             if(CheckCollisionPointRec(click,ExitR)){
+                PlaySound(clicks);
                 return MENU;
             }
 
@@ -534,7 +587,10 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
 }
 
 int DrawPlayerSelection(int screenWidth, int screenHeight){
+    
     // ------ Recrusos --------- //
+    Sound clicks = LoadSound("../assets/sound/pk.mp3");
+    
     Texture2D background = LoadTexture("../assets/HowManyPlayers.png");
     
     Texture2D button1 = LoadTexture("../assets/buttons/1.png");
@@ -603,22 +659,32 @@ int DrawPlayerSelection(int screenWidth, int screenHeight){
             DrawTextureEx(button4,p4,0.0f,1.0f,WHITE);
 
             if(IsKeyPressed(KEY_ESCAPE)){
+                PlaySound(clicks);
+
                 return -1;
             }
 
             if(CheckCollisionPointRec(click,p1R)){
+                PlaySound(clicks);
+                
                 return 1;
             }
             
             if(CheckCollisionPointRec(click,p2R)){
+                PlaySound(clicks);
+                
                 return 2;
             }
             
             if(CheckCollisionPointRec(click,p3R)){
+                PlaySound(clicks);
+                
                 return 3;
             }
             
             if(CheckCollisionPointRec(click,p4R)){
+                PlaySound(clicks);
+                
                 return 4;
             }
         EndDrawing();
