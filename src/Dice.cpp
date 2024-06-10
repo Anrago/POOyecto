@@ -7,7 +7,7 @@ Dice::Dice(short int MaxMumber)
 }
 
 int Dice::DropDice(){
-    int c = rand()%(this->MaxNumber - 0 + 1);
+    int c = rand()%MaxNumber + 1;
     std::cout<< c <<" "<<std::endl;
     return c;
 }

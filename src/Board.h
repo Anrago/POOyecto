@@ -14,9 +14,9 @@ using std::vector;
 class Board
 {
 private:
-    Snake snakes;
-    Ladder ladders;
-    vector<Player> players;
+    vector <Snake> snakes;
+    vector <Ladder> ladders;
+    vector <Player> players;
     Dice dices;
     short int NumPlayers;
 
@@ -26,15 +26,21 @@ public:
     void DrawBoard(int PosX, int PosY);
     void MovePlayer();
     // NumPlayer= Numero de jugador , boxes = numero de casillas que avanzara
+    
+    void DefinePlayersPlaying(short int NumPlayers);
+    
     void MovePlayer(int NumPlayer,int boxes);
     // --------- Textures --------- //
     // Players
     void DefinePlayerSkinGhost();
+    Texture2D GetPlayerSkin(int NumPlayer);
+    Vector2 GetActualPlayerPosition(int NumPlayer);
     
     // Snake
     void DefineSnakeTexture();
     void FreeSnakeTexture();
-
+    void InitSnakes();
+    void InitLadders();
     //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
     // void CasePlayers(Player *J1, Player *J2, int PosX, int PosY);
     // void CasePlayers(Player *J1, Player *J2, Player *J3, int PosX, int PosY);

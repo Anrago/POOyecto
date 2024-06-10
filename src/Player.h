@@ -9,9 +9,19 @@ public:
     Vector2 Position = {0,9};
     
     Player(short int NumPlayer=1,Color PlayerColor = BLUE);
-    Rectangle DrawPlayer(int PosX, int PosY,int CELL_SIZE, int PADDING);
+    // Solo dibuja el jugador
+    void DrawPlayer(int PosX, int PosY,int CELL_SIZE, int PADDING);
+    // retorna la posicion actual del jugador
+    Rectangle BoxPlayer(int PosX, int PosY,int CELL_SIZE, int PADDING);
+    
     void Move(int NumCas);
     void DefineSkin();
+    void DefineSkin2();
+    void DefineSkin3();
+    void DefineSkin4();
+
+    Vector2 GetPosition();
+
     //virtual int Roll();
 
 
