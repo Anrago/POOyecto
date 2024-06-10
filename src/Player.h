@@ -6,7 +6,8 @@ public:
     short int NumPlayer;
     Color PlayerColor;
     Texture2D skin;
-    Vector2 Position = {0,9};
+    Vector2 Position = {9,0};
+    bool win= false;
     
     Player(short int NumPlayer=1,Color PlayerColor = BLUE);
     // Solo dibuja el jugador

@@ -27,8 +27,8 @@ typedef enum Screen{
 // ---------------------- Prototipos ---------------------- //
 Screen DrawMenu(int screenWidth, int screenHeight);
 void DrawExit(int screenWidth, int screenHeight);
-int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
-Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, int winner);
+std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
+Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner);
 int DrawPlayerSelection(int screenWidth, int screenHeight);
 
 // ---------------------- Main ---------------------- //
@@ -57,6 +57,9 @@ int main()
     // Escena actual
     Screen currentScreen=MENU;
 
+    // vector de ganadores
+    std::vector <int> winners;
+
     bool exit = false;
     while (exit == false)
     {
@@ -82,7 +85,10 @@ int main()
         case GAME:
         {
             Tablero.DefinePlayersPlaying(PlayersPlaying);
-            winner = DrawGame(screenWidth,screenHeight,PlayersPlaying,NumDice,Tablero,dado);
+            winners = DrawGame(screenWidth,screenHeight,PlayersPlaying,NumDice,Tablero,dado);
+            for(int i =0 ; i<PlayersPlaying;i++){
+                std::cout<<winners[i]<<std::endl;
+            }
             if(winner == -1){
                 currentScreen = MENU;
             }
@@ -93,7 +99,7 @@ int main()
         }
         case WINNERS:
         {
-            currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayersPlaying,winner);
+            currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayersPlaying,winners);
             break;
         }
         case EXIT:
@@ -203,7 +209,7 @@ void DrawExit(int screenWidth, int screenHeight){
 
 }
 
-int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
+std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
     // ------------ Recursos ------------ //
     
     Texture2D background = LoadTexture("../assets/GameBackground.png");
@@ -245,8 +251,16 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
     Color maskColor = {1,1,1,50};
     Rectangle maskV = {0,0,float(screenWidth),float(screenHeight)};
 
+    // Posicion actual del jugador, usada para saber quien gano
     Vector2 PlayerPosition;
 
+    // vector que almacenara el orden de ganadores
+    std::vector<int> winners;
+
+    // posicion del array de winners
+    int wc=0;
+
+    // bandera de ciclo
     bool finish = false;
 
     Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
@@ -255,17 +269,22 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
     while(finish == false){
         BeginDrawing();
             if(IsKeyPressed(KEY_ESCAPE)){
-                return -1;
+                return winners;
             }
             DrawTexture(background,0,0,WHITE);
             Tablero.DrawBoard(100, 60);
+            
+            if(Tablero.players[playerTurn].win== true){
+                playerTurn++;
+                if(playerTurn >= NumPlayers){
+                    playerTurn=0;
+                }
+            }
 
-                    
                 if (IsKeyPressed(KEY_SPACE))
                 {
                     // tira el dado
                     playerMove = dado.DropDice();
-
 
                     itoa(playerMove,diceResultado,10);
                     
@@ -278,43 +297,44 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
                     actualtime=0.0f;
 
                     // mostramos el mensaje por 1.0 segnudos
-                    while(actualtime <=timetolive){
-                        BeginDrawing();
-                            DrawTexture(background,0,0,WHITE);
-                            Tablero.DrawBoard(100, 60);
+                    // while(actualtime <=timetolive){
+                    //     BeginDrawing();
                             
-                            /*
-                                Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
-                                opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
-                                o tambien podria ser cierta cantidad de opacidad
-                            */
-                            if(actualtime <= 0.15f){
-                                // Jugador actual
-                                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
-                                // Mascara
-                                DrawRectangleRec(maskV,maskColor);
-                                op+=10;
-                                maskColor = {1,1,1,op};
-                            }
-                            else
-                            {
-                                // Jugador actual
-                                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
-                                // Mascara
-                                DrawRectangleRec(maskV,maskColor);
-                            }
+                    //         DrawTexture(background,0,0,WHITE);
+                    //         Tablero.DrawBoard(100, 60);
                             
-                            // Dados
-                            DrawTextureEx(Dice,TdiceV,0.0f,0.5f,WHITE);
-                            // Jugador
-                            DrawTextureEx(PlayerSkin,TplayerV,0.0f,4.0f,WHITE);
-                            // Resultado arrojado
-                            DrawTextEx(fuente,diceResultado,diceV,82,1,WHITE);
+                    //         /*
+                    //             Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
+                    //             opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
+                    //             o tambien podria ser cierta cantidad de opacidad
+                    //         */
+                    //         if(actualtime <= 0.15f){
+                    //             // Jugador actual
+                    //             DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                    //             // Mascara
+                    //             DrawRectangleRec(maskV,maskColor);
+                    //             op+=10;
+                    //             maskColor = {1,1,1,op};
+                    //         }
+                    //         else
+                    //         {
+                    //             // Jugador actual
+                    //             DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                    //             // Mascara
+                    //             DrawRectangleRec(maskV,maskColor);
+                    //         }
+                            
+                    //         // Dados
+                    //         DrawTextureEx(Dice,TdiceV,0.0f,0.5f,WHITE);
+                    //         // Jugador
+                    //         DrawTextureEx(PlayerSkin,TplayerV,0.0f,4.0f,WHITE);
+                    //         // Resultado arrojado
+                    //         DrawTextEx(fuente,diceResultado,diceV,82,1,WHITE);
 
-                            actualtime+=GetFrameTime();
+                    //         actualtime+=GetFrameTime();
 
-                        EndDrawing();
-                    }
+                    //     EndDrawing();
+                    // }
 
                     // Movemos el jugador
                     Tablero.MovePlayer(playerTurn,playerMove);
@@ -324,9 +344,25 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
 
                     // Si es 0 0 Gano
                     if(PlayerPosition.x == 0 && PlayerPosition.y == 0){
-                        return playerTurn;
+                        // std::cout<<"Turno "<<playerTurn<<std::endl;
+                        // std::cout<<"Posicion "<<wc<<std::endl;
+                        // std::cout<<"NumPlay "<<NumPlayers<<std::endl;
+                        winners.push_back(playerTurn);
+                        wc++;
+
+                        Tablero.players[playerTurn].win = true;
+                        
+                        if(wc >= NumPlayers-1){
+                            for(int i =0 ; i<NumPlayers;i++){
+                                if(Tablero.players[i].win== false){
+                                    winners.push_back(i);
+                                    break;
+                                }
+                            }
+                            finish = true;
+                        }
                     }
-                    
+
                     // Cambiamos de turno
                     playerTurn++;
                     
@@ -348,10 +384,10 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
 
         EndDrawing();
     }
-    return 0;
+    return winners;
 }
 
-Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, int winner){
+Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner){
     // -------------- Recursos -------------- //
 
     Font fuente = LoadFont("../assets/fuente/Minecraft.ttf");
@@ -364,6 +400,8 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
     // -------------- Text Position -------------- // 
 
     const char winnerText[10] = {"WINNER"};
+    const char secondText[10] = {"2do"};
+    const char thirdText[10] = {"3do"};
 
     int winnerSize=MeasureText(winnerText,54);
 
@@ -397,13 +435,46 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
     ExitV.y=ExitR.y;
 
     // -------------- Winner -------------- // 
-
-    // Texture2D winnerT= Tablero.GetPlayerSkin(winner);
-    Texture2D winnerT= Tablero.GetPlayerSkin(winner);
+    // Ganador
+    Texture2D winnerT= Tablero.GetPlayerSkin(winner[0]);
+    Texture2D secondT;
+    Texture2D thirdT;
+    if(NumPayers > 1){
+        // 2do lugar
+        secondT= Tablero.GetPlayerSkin(winner[1]);
+        if(NumPayers >2){
+            //3er lugar
+            thirdT= Tablero.GetPlayerSkin(winner[2]);
+        }
+    }
+    for (int i = 0;i<NumPayers;i++ ){
+        std::cout<<winner[i]<<std::endl;
+    }
 
     Vector2 PlayerWinnerV;
     PlayerWinnerV.x = (screenWidth /2 ) - (winnerT.width*5 / 2);
     PlayerWinnerV.y = (screenHeight /2 ) - (winnerT.height*5 / 2);
+    // ----- Segundo lugar ------- //
+    // imagen
+    Vector2 SecondV;
+    SecondV.x = screenWidth *0.10;
+    SecondV.y = (screenHeight /2 ) - (secondT.height*4 / 2);
+    
+    // texto
+    Vector2 TSecondV;
+    TSecondV.x = screenWidth *0.15;
+    TSecondV.y = (screenHeight /2 ) - (secondT.height*4 / 2) - 100;
+    
+    // ----- Tecer lugar ------- //
+    // imagen
+    Vector2 ThirdV;
+    ThirdV.x = screenWidth *0.80;
+    ThirdV.y = (screenHeight /2 ) - (thirdT.height*3 / 2);
+    
+    // texto
+    Vector2 TThirdV;
+    TThirdV.x = screenWidth *0.83;
+    TThirdV.y = (screenHeight /2 ) - (thirdT.height*3 / 2) - 100;
 
     // -------------- Extra -------------- // 
     
@@ -426,7 +497,21 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
             // texto de ganador
             DrawTextEx(fuente,winnerText,winnerV,54,1,YELLOW);
 
+            // ------------- winners ------------ //
             DrawTextureEx(winnerT,PlayerWinnerV,0.0f,5.0f,WHITE);
+            if(NumPayers >1){
+                // Textura
+                DrawTextureEx(secondT,SecondV,0.0f,4.0f,WHITE);
+                // texto
+                DrawTextEx(fuente,secondText,TSecondV,54,1,WHITE);
+                
+                if(NumPayers > 2){
+                    // textura
+                    DrawTextureEx(thirdT,ThirdV,0.0f,3.0f,WHITE);
+                    // texto
+                    DrawTextEx(fuente,thirdText,TThirdV,54,1,WHITE);
+                }
+            }
             
             
             // Botones
