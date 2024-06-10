@@ -98,8 +98,8 @@ void Board::DrawBoard(int PosX, int PosY)
             {
                 Rectangle Tail = snakes[x].DrawSnake(PosX, PosY, CELL_SIZE, PADDING);
 
-                // if (CheckCollisionRecs(ActColision, Tail)) // Verifica colision entre jugador y serpiente
-                //     players[k].Position = snakes[x].Header;
+                if (CheckCollisionRecs(ActColision, Tail)) // Verifica colision entre jugador y serpiente
+                    players[k].Position = snakes[x].Header;
             }
             
             // Escaleras

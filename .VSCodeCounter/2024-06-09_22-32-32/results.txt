@@ -1,0 +1,35 @@
+Date : 2024-06-09 22:32:32
+Directory : c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src
+Total : 11 files,  751 codes, 223 comments, 244 blanks, all 1218 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         11 |        751 |        223 |        244 |      1,218 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                           | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                              |         11 |        751 |        223 |        244 |      1,218 |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                       | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Board.cpp  | C++      |        132 |         85 |         53 |        270 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Board.h    | C++      |         34 |          8 |          7 |         49 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Dice.cpp   | C++      |         10 |          4 |          4 |         18 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Dice.h     | C++      |         12 |          1 |          2 |         15 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Ladder.cpp | C++      |         19 |          6 |          7 |         32 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Ladder.h   | C++      |         10 |          0 |          3 |         13 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Player.cpp | C++      |         76 |          7 |         16 |         99 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Player.h   | C++      |         20 |          3 |          6 |         29 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Snake.cpp  | C++      |         25 |         11 |          9 |         45 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\Snake.h    | C++      |         13 |          1 |          6 |         20 |
+| c:\Users\PC\Documents\CHAMBA\Proyectos\POOyecto\src\main.cpp   | C++      |        400 |         97 |        131 |        628 |
+| Total                                                          |          |        751 |        223 |        244 |      1,218 |
++----------------------------------------------------------------+----------+------------+------------+------------+------------+

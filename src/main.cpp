@@ -401,7 +401,7 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
 
     const char winnerText[10] = {"WINNER"};
     const char secondText[10] = {"2do"};
-    const char thirdText[10] = {"3do"};
+    const char thirdText[10] = {"3ro"};
 
     int winnerSize=MeasureText(winnerText,54);
 
