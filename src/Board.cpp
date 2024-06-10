@@ -2,7 +2,7 @@
 #include <iostream>
 Board::Board()
 {
-    NumPlayers = 2;
+    NumPlayers = 1;
     Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
     for (int i = 0; i < NumPlayers; i++)
     {
@@ -16,6 +16,32 @@ Board::Board()
 
 Board::Board(short int NumPlayers)
 {
+    Color colorsP[4] = {BLUE, RED, GREEN, YELLOW}; // Colores de jugadores
+    this->NumPlayers = NumPlayers;
+
+    for (int i = 0; i < NumPlayers; i++)
+    {
+        Player Temp = {NumPlayers, colorsP[i]}; // Inicializa jugador
+        
+        // Esto luego lo muevo es solo para calar diferentes skins, o capas y lo dejo juasjuas
+        if(i == 0){
+            Temp.DefineSkin();
+        }else if(i==1){
+            Temp.DefineSkin2();
+        }else if(i==2){
+            Temp.DefineSkin3();
+        }else if(i == 3){
+            Temp.DefineSkin4();
+        }
+
+        players.push_back(Temp);                // Almacena jugador en vector
+    }
+
+    InitSnakes();
+    InitLadders();
+}
+
+void Board::DefinePlayersPlaying(short int NumPlayers){
     Color colorsP[4] = {BLUE, RED, GREEN, YELLOW}; // Colores de jugadores
     this->NumPlayers = NumPlayers;
 

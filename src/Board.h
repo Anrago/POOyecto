@@ -26,6 +26,9 @@ public:
     void DrawBoard(int PosX, int PosY);
     void MovePlayer();
     // NumPlayer= Numero de jugador , boxes = numero de casillas que avanzara
+    
+    void DefinePlayersPlaying(short int NumPlayers);
+    
     void MovePlayer(int NumPlayer,int boxes);
     // --------- Textures --------- //
     // Players

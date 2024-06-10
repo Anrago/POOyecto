@@ -29,6 +29,7 @@ Screen DrawMenu(int screenWidth, int screenHeight);
 void DrawExit(int screenWidth, int screenHeight);
 int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
 Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, int winner);
+int DrawPlayerSelection(int screenWidth, int screenHeight);
 
 // ---------------------- Main ---------------------- //
 int main()
@@ -41,14 +42,12 @@ int main()
     srand(time(NULL));
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
-    int PlayerPlaying=4;
+    int PlayersPlaying=4;
 
     int winner=0;
-    
+
     // Tablero
-    Board Tablero(PlayerPlaying);
-    // Definimos la textura de las serpientes
-    Tablero.DefineSnakeTexture();
+    Board Tablero(PlayersPlaying);
     
     // Dados
     Dice dado;
@@ -56,10 +55,10 @@ int main()
     int NumDice=2;
 
     // Escena actual
-    Screen currentScreen=GAME;
+    Screen currentScreen=MENU;
 
     bool exit = false;
-    while (!WindowShouldClose() && exit == false)
+    while (exit == false)
     {
         switch (currentScreen)
         {
@@ -70,18 +69,31 @@ int main()
         }
         case PLAYER_SELECTION:
         {
+            PlayersPlaying = DrawPlayerSelection(screenWidth,screenHeight);
+            if(PlayersPlaying == -1){
+                currentScreen = MENU;
+            }
+            else
+            {
+                currentScreen = GAME;
+            }
             break;
         }
         case GAME:
         {
-            winner = DrawGame(screenWidth,screenHeight,PlayerPlaying,NumDice,Tablero,dado);
-            currentScreen = WINNERS;
+            Tablero.DefinePlayersPlaying(PlayersPlaying);
+            winner = DrawGame(screenWidth,screenHeight,PlayersPlaying,NumDice,Tablero,dado);
+            if(winner == -1){
+                currentScreen = MENU;
+            }
+            else{
+                currentScreen = WINNERS;
+            }
             break;
         }
         case WINNERS:
         {
-            std::cout << winner<< std::endl;
-            currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayerPlaying,winner);
+            currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayersPlaying,winner);
             break;
         }
         case EXIT:
@@ -163,8 +175,7 @@ Screen DrawMenu(int screenWidth, int screenHeight){
             
 
             if(CheckCollisionPointRec(click,StartR)){
-                // No deberia de ser game, deberia de ser la seleccion de cuantos personajes va a querer
-                return GAME;
+                return PLAYER_SELECTION;
             }
             
             if(CheckCollisionPointRec(click,ExitR)){
@@ -218,7 +229,7 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
     TdiceV.y= (screenHeight *0.65) - (Dice.height / 2);
 
     Vector2 TplayerV;
-    TplayerV.x = screenWidth *0.20;
+    TplayerV.x = screenWidth *0.70;
 
     char diceResultado[3];
     
@@ -238,10 +249,17 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
 
     bool finish = false;
 
+    Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+    TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
+
     while(finish == false){
         BeginDrawing();
+            if(IsKeyPressed(KEY_ESCAPE)){
+                return -1;
+            }
             DrawTexture(background,0,0,WHITE);
             Tablero.DrawBoard(100, 60);
+
                     
                 if (IsKeyPressed(KEY_SPACE))
                 {
@@ -251,7 +269,7 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
 
                     itoa(playerMove,diceResultado,10);
                     
-                    Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+                    PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
                     TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
 
                     int op=50;
@@ -317,8 +335,16 @@ int DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Boa
                         playerTurn=0;
                     }
                 }
-                
-                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+
+            // Actualizamos la textura
+            PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+            TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
+
+            // Jugador actual
+            DrawTextureEx(PlayerSkin,TplayerV,0.0f,4.0f,WHITE);
+            
+            // Jugador actual
+            DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
 
         EndDrawing();
     }
@@ -420,4 +446,97 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
         EndDrawing();
     }
     return MENU;
+}
+
+int DrawPlayerSelection(int screenWidth, int screenHeight){
+    // ------ Recrusos --------- //
+    Texture2D background = LoadTexture("../assets/HowManyPlayers.png");
+    
+    Texture2D button1 = LoadTexture("../assets/buttons/1.png");
+    Texture2D button2 = LoadTexture("../assets/buttons/2.png");
+    Texture2D button3 = LoadTexture("../assets/buttons/3.png");
+    Texture2D button4 = LoadTexture("../assets/buttons/4.png");
+
+    // -------- Buttons  --------- //
+    Vector2 p1;
+    p1.x = screenWidth*0.10;
+    p1.y = screenHeight*0.10;
+
+    Rectangle p1R;
+    p1R.x=p1.x;
+    p1R.y=p1.y;
+    p1R.width=button1.width;
+    p1R.height=button1.height;
+    
+    Vector2 p2;
+    p2.x = screenWidth*0.65;
+    p2.y = screenHeight*0.10;
+    
+    Rectangle p2R;
+    p2R.x=p2.x;
+    p2R.y=p2.y;
+    p2R.width=button1.width;
+    p2R.height=button1.height;
+    
+    Vector2 p3;
+    p3.x = screenWidth*0.10;
+    p3.y = screenHeight*0.70;
+    
+    Rectangle p3R;
+    p3R.x=p3.x;
+    p3R.y=p3.y;
+    p3R.width=button1.width;
+    p3R.height=button1.height;
+    
+    Vector2 p4;
+    p4.x = screenWidth*0.65;
+    p4.y = screenHeight*0.70;
+    
+    Rectangle p4R;
+    p4R.x=p4.x;
+    p4R.y=p4.y;
+    p4R.width=button1.width;
+    p4R.height=button1.height;
+
+    bool finish = false;
+
+    Vector2 mouse;
+    Vector2 click;
+
+    while (finish == false){
+        BeginDrawing();
+            mouse = GetMousePosition();
+
+            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                click=mouse;
+            }
+            DrawTexture(background,0,0,WHITE);
+            
+            DrawTextureEx(button1,p1,0.0f,1.0f,WHITE);
+            DrawTextureEx(button2,p2,0.0f,1.0f,WHITE);
+            DrawTextureEx(button3,p3,0.0f,1.0f,WHITE);
+            DrawTextureEx(button4,p4,0.0f,1.0f,WHITE);
+
+            if(IsKeyPressed(KEY_ESCAPE)){
+                return -1;
+            }
+
+            if(CheckCollisionPointRec(click,p1R)){
+                return 1;
+            }
+            
+            if(CheckCollisionPointRec(click,p2R)){
+                return 2;
+            }
+            
+            if(CheckCollisionPointRec(click,p3R)){
+                return 3;
+            }
+            
+            if(CheckCollisionPointRec(click,p4R)){
+                return 4;
+            }
+        EndDrawing();
+    }
+    return 0;
 }
