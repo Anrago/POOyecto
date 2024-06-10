@@ -297,44 +297,44 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                     actualtime=0.0f;
 
                     // mostramos el mensaje por 1.0 segnudos
-                    // while(actualtime <=timetolive){
-                    //     BeginDrawing();
+                    while(actualtime <=timetolive){
+                        BeginDrawing();
                             
-                    //         DrawTexture(background,0,0,WHITE);
-                    //         Tablero.DrawBoard(100, 60);
+                            DrawTexture(background,0,0,WHITE);
+                            Tablero.DrawBoard(100, 60);
                             
-                    //         /*
-                    //             Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
-                    //             opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
-                    //             o tambien podria ser cierta cantidad de opacidad
-                    //         */
-                    //         if(actualtime <= 0.15f){
-                    //             // Jugador actual
-                    //             DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
-                    //             // Mascara
-                    //             DrawRectangleRec(maskV,maskColor);
-                    //             op+=10;
-                    //             maskColor = {1,1,1,op};
-                    //         }
-                    //         else
-                    //         {
-                    //             // Jugador actual
-                    //             DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
-                    //             // Mascara
-                    //             DrawRectangleRec(maskV,maskColor);
-                    //         }
+                            /*
+                                Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
+                                opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
+                                o tambien podria ser cierta cantidad de opacidad
+                            */
+                            if(actualtime <= 0.15f){
+                                // Jugador actual
+                                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                                // Mascara
+                                DrawRectangleRec(maskV,maskColor);
+                                op+=10;
+                                maskColor = {1,1,1,op};
+                            }
+                            else
+                            {
+                                // Jugador actual
+                                DrawTextEx(fuente,actualPlayer[playerTurn],playerV,72,1,WHITE);
+                                // Mascara
+                                DrawRectangleRec(maskV,maskColor);
+                            }
                             
-                    //         // Dados
-                    //         DrawTextureEx(Dice,TdiceV,0.0f,0.5f,WHITE);
-                    //         // Jugador
-                    //         DrawTextureEx(PlayerSkin,TplayerV,0.0f,4.0f,WHITE);
-                    //         // Resultado arrojado
-                    //         DrawTextEx(fuente,diceResultado,diceV,82,1,WHITE);
+                            // Dados
+                            DrawTextureEx(Dice,TdiceV,0.0f,0.5f,WHITE);
+                            // Jugador
+                            DrawTextureEx(PlayerSkin,TplayerV,0.0f,4.0f,WHITE);
+                            // Resultado arrojado
+                            DrawTextEx(fuente,diceResultado,diceV,82,1,WHITE);
 
-                    //         actualtime+=GetFrameTime();
+                            actualtime+=GetFrameTime();
 
-                    //     EndDrawing();
-                    // }
+                        EndDrawing();
+                    }
 
                     // Movemos el jugador
                     Tablero.MovePlayer(playerTurn,playerMove);
