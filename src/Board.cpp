@@ -72,18 +72,6 @@ void Board::DrawBoard(int PosX, int PosY)
     // Ciclo para recorrer filas
     for (int i = 0; i < 10; i++)
     {
-        // Ciclo para recorrer columnas
-        // for (int j = 0; j < 10; j++)
-        // {
-        //     // Calcula las coordenadas de la celda
-        //     float cellX = PosX + j * (CELL_SIZE + PADDING);
-        //     float cellY = PosY + i * (CELL_SIZE + PADDING);
-
-        //     // Define el rectángulo de la celda
-        //     // Rectangle cellRect = {cellX, cellY, CELL_SIZE, CELL_SIZE};
-        //     // DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, BLACK);
-        // }
-
         // Dibujado de serpiente y de escalera
 
         // Dibujamos los jugadores

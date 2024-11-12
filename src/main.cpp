@@ -241,7 +241,7 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
     Vector2 playerV;
     playerV.x= screenWidth *0.69;
     playerV.y= screenHeight *0.13;
-    
+     
     Vector2 diceV;
     diceV.x= (screenWidth *0.50) - 41;
     diceV.y= (screenHeight *0.50) - 41;
