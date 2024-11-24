@@ -230,6 +230,7 @@ int main()
     }
 */
 
+/*
 std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
     // ------------ Recursos ------------ //
     
@@ -347,11 +348,11 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                             DrawTexture(background,0,0,WHITE);
                             Tablero.DrawBoard(100, 60);
                             
-                            /*
-                                Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
-                                opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
-                                o tambien podria ser cierta cantidad de opacidad
-                            */
+                            // 
+                            //     Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
+                            //     opacidad de maskColor poco a poco hasta llegar a cierto punto en el tiempo
+                            //     o tambien podria ser cierta cantidad de opacidad
+                            // 
                             if(actualtime <= 0.15f){
                                 // Musica
                                 volumen-=0.1f;
@@ -436,7 +437,9 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
     UnloadMusicStream(musica);
     return winners;
 }
+*/
 
+/*
 Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner){
     // -------------- Recursos -------------- //
     Sound win = LoadSound("../assets/sound/OHMYGOD.mp3");
@@ -596,7 +599,9 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
     }
     return MENU;
 }
+*/
 
+/*
 int DrawPlayerSelection(int screenWidth, int screenHeight){
     
     // ------ Recrusos --------- //
@@ -702,3 +707,4 @@ int DrawPlayerSelection(int screenWidth, int screenHeight){
     }
     return 0;
 }
+*/
