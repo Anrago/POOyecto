@@ -1,16 +1,17 @@
 #include "raylib.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "Menu.h"
-#include "Board.h"
+
+// -------------------------------------------------------------------------- //
+    // ------------ Removimos librerias innecesarias ------------ //
+// -------------------------------------------------------------------------- //
+
+// -------------------------------------------------------------------------- //
+// ------------ Comenzamos a seguir un unico estandar para las variables (camelCase) ------------ //
+// -------------------------------------------------------------------------- //
 
 /*      POOYECTO-SNAKE AND LADDERS
 
-El pooyecto sera un serpientes y escaleras
-
-
-COMANDOS
+COMANDOS para compilar el juego
 cd build
 mingw32-make
 ./name.exe
@@ -20,20 +21,16 @@ mingw32-make
 // -------------------------------------------------------------------------- //
 // ------------ Creamos un archivo .h para almacenar este struct ------------ //
 // -------------------------------------------------------------------------- //
-// typedef enum Screen{
-//     MENU,
-//     PLAYER_SELECTION,
-//     GAME,
-//     WINNERS,
-//     EXIT
-// }Screen;
 
-// ---------------------- Prototipos ---------------------- //
-Screen DrawMenu(int screenWidth, int screenHeight);
-void DrawExit(int screenWidth, int screenHeight);
-std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
-Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner);
-int DrawPlayerSelection(int screenWidth, int screenHeight);
+/*
+typedef enum Screen{
+    MENU,
+    PLAYER_SELECTION,
+    GAME,
+    WINNERS,
+    EXIT
+}Screen;
+*/
 
 // ---------------------- Main ---------------------- //
 int main()
@@ -49,17 +46,17 @@ int main()
     srand(time(NULL));
     
     // Jugadores actuales jugando, esto por default, pero debera de actualizarse en la pantalla de players select
-    int PlayersPlaying=4;
+    int playersPlaying=4;
 
     int winner=0;
 
     // Tablero
-    Board Tablero(PlayersPlaying);
+    Board board(playersPlaying);
     
     // Dados
-    Dice dado;
-    // Numero de dados con los que juagaran, igual se actualizaria en players select
-    int NumDice=2;
+    Dice dice;
+    // Numero de dices con los que juagaran, igual se actualizaria en players select
+    int numDice=2;
 
     // Escena actual
     Screen currentScreen=MENU;
@@ -79,8 +76,8 @@ int main()
         }
         case PLAYER_SELECTION:
         {
-            PlayersPlaying = DrawPlayerSelection(screenWidth,screenHeight);
-            if(PlayersPlaying == -1){
+            playersPlaying = DrawPlayerSelection(screenWidth,screenHeight);
+            if(playersPlaying == -1){
                 currentScreen = MENU;
             }
             else
@@ -91,8 +88,8 @@ int main()
         }
         case GAME:
         {
-            Tablero.DefinePlayersPlaying(PlayersPlaying);
-            winners = DrawGame(screenWidth,screenHeight,PlayersPlaying,NumDice,Tablero,dado);
+            board.DefinePlayersPlaying(playersPlaying);
+            winners = DrawGame(screenWidth,screenHeight,playersPlaying,numDice,board,dice);
             if(winner == -1){
                 currentScreen = MENU;
             }
@@ -103,7 +100,7 @@ int main()
         }
         case WINNERS:
         {
-            currentScreen = DrawWinner(screenWidth,screenHeight,Tablero,PlayersPlaying,winners);
+            currentScreen = DrawWinner(screenWidth,screenHeight,board,playersPlaying,winners);
             break;
         }
         case EXIT:
@@ -119,7 +116,7 @@ int main()
     CloseWindow();
 
     // Liberamos memoria
-    Tablero.FreeSnakeTexture();
+    board.FreeSnakeTexture();
     return 0;
 }
 
