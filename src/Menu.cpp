@@ -1,14 +1,26 @@
 #include "Menu.h"
+#include "Button.h"
+
+// ------------------------------
+// Comentario para lo de la clase de buttons
+// Seria como logico crear una clase button con los atributos pero seria como, innecesario porque de igual manera
+// al dibujar el boton necesito los atributos por separado, es decir el rectangulo, la posicion en Vector y la textura
+// asi que no le veo sentido crear una clase o struct para los botones y juntar todos los atributos si de igual forma
+// necesito separarlos para usarlos
+// ------------------------------
+
+// ---------- Creamos una variable constante para las rutas de archivos comunes
+//SoundsRutes
+const char* clickSound = "../assets/sound/pk.mp3";
 
 Screen DrawMenu(int screenWidth, int screenHeight){
     // -------- Audio -------- //
     Music musica = LoadMusicStream("../assets/musica/Stage1.mp3");
 
-    Sound clicks = LoadSound("../assets/sound/pk.mp3");
+    Sound clicks = LoadSound(clickSound);
     
     // -------- Texturas -------- //
     Texture2D background = LoadTexture("../assets/MenuBackgroundClean.png");
-
     Texture2D startButton = LoadTexture("../assets/buttons/StartButtonDef.png");
     Texture2D exitButton = LoadTexture("../assets/buttons/ExitButton.png");
 
@@ -25,6 +37,8 @@ Screen DrawMenu(int screenWidth, int screenHeight){
     Vector2 StartV;
     StartV.x=StartR.x;
     StartV.y=StartR.y;
+
+
 
     // Rec de salida
     Rectangle ExitR;
@@ -100,7 +114,7 @@ void DrawExit(int screenWidth, int screenHeight){
 int DrawPlayerSelection(int screenWidth, int screenHeight){
     
     // ------ Recrusos --------- //
-    Sound clicks = LoadSound("../assets/sound/pk.mp3");
+    Sound clicks = LoadSound(clickSound);
     
     Texture2D background = LoadTexture("../assets/HowManyPlayers.png");
     
@@ -211,7 +225,7 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
 
     Font fuente = LoadFont("../assets/fuente/Minecraft.ttf");
 
-    Sound clicks = LoadSound("../assets/sound/pk.mp3");
+    Sound clicks = LoadSound(clickSound);
 
     Texture2D ButtonPlayAgain= LoadTexture("../assets/buttons/PlayAgain.png");
     Texture2D ButtonExit= LoadTexture("../assets/buttons/ExitButton.png");
