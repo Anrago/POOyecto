@@ -17,14 +17,11 @@ public:
     Rectangle BoxPlayer(int posX, int posY, int cellSize, int padding);
     
     void Move(int NumCas);
+    void DefineSkins(int index);
     void DefineSkin();
     void DefineSkin2();
     void DefineSkin3();
     void DefineSkin4();
 
     Vector2 GetPosition();
-
-    //virtual int Roll();
-
-
 };

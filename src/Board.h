@@ -24,7 +24,6 @@ public:
     Board();
     Board(short int numPlayers);
     void DrawBoard(int PosX, int PosY);
-    void MovePlayer();
     // NumPlayer= Numero de jugador , boxes = numero de casillas que avanzara
     
     void DefinePlayersPlaying(short int numPlayers);
@@ -41,8 +40,4 @@ public:
     void FreeSnakeTexture();
     void InitSnakes();
     void InitLadders();
-    //---------------------------TODO MAL PERO NO LO BORRO XD-----------------------
-    // void CasePlayers(Player *J1, Player *J2, int PosX, int PosY);
-    // void CasePlayers(Player *J1, Player *J2, Player *J3, int PosX, int PosY);
-    // void CasePlayers(Player *J1, Player *J2, Player *J3, Player *J4 , int PosX, int PosY);
 };

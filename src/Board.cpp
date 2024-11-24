@@ -7,38 +7,48 @@ Board::Board()
     Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
     for (int i = 0; i < numPlayers; i++)
     {
-        Player temp = {numPlayers, colorsP[i]}; // Inicializa jugador
-        players.push_back(temp);                // Almacena jugador en vector
+        Player temp = {numPlayers, colorsP[i]}; 
+        players.push_back(temp);                
     }
 
     InitSnakes();
     InitLadders();
 }
+// ---------------------------
+// Este constructor hace lo mismo que el DefinePLayerPlaying, pero solo es requerida esa funcion
+// ---------------------------
 
 Board::Board(short int numPlayers)
 {
-    Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
-    this->numPlayers = numPlayers;
+    // Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
+    // this->numPlayers = numPlayers;
 
-    for (int i = 0; i < numPlayers; i++)
-    {
-        Player temp = {numPlayers, colorsP[i]};
+    // for (int i = 0; i < numPlayers; i++)
+    // {
+    //     Player temp = {numPlayers, colorsP[i]};
+        
 
-        if(i == 0){
-            temp.DefineSkin();
-        }else if(i==1){
-            temp.DefineSkin2();
-        }else if(i==2){
-            temp.DefineSkin3();
-        }else if(i == 3){
-            temp.DefineSkin4();
-        }
+    //     // ---------------------
+    //     // En vez de definir las skins por if, creamos una funcion en la cual dependiendo el indice le asigna una
+    //     // skin
+    //     temp.DefineSkins(i+1);
 
-        players.push_back(temp);
-    }
+    //     // if(i == 0){
+    //     //     temp.DefineSkin();
+    //     // }else if(i==1){
+    //     //     temp.DefineSkin2();
+    //     // }else if(i==2){
+    //     //     temp.DefineSkin3();
+    //     // }else if(i == 3){
+    //     //     temp.DefineSkin4();
+    //     // }
+    //     // ---------------------
 
-    InitSnakes();
-    InitLadders();
+    //     players.push_back(temp);
+    // }
+
+    // InitSnakes();
+    // InitLadders();
 }
 
 void Board::DefinePlayersPlaying(short int numPlayers){
@@ -49,18 +59,22 @@ void Board::DefinePlayersPlaying(short int numPlayers){
     {
         Player temp = {numPlayers, colorsP[i]}; // Inicializa jugador
         
-        // Esto luego lo muevo es solo para calar diferentes skins, o capas y lo dejo juasjuas
-        if(i == 0){
-            temp.DefineSkin();
-        }else if(i==1){
-            temp.DefineSkin2();
-        }else if(i==2){
-            temp.DefineSkin3();
-        }else if(i == 3){
-            temp.DefineSkin4();
-        }
+        // ---------------------
+        // En vez de definir las skins por if, creamos una funcion en la cual dependiendo el indice le asigna una
+        //  skin
 
-        players.push_back(temp);                // Almacena jugador en vector
+        temp.DefineSkins(i+1);
+        // if(i == 0){
+        //     temp.DefineSkin();
+        // }else if(i==1){
+        //     temp.DefineSkin2();
+        // }else if(i==2){
+        //     temp.DefineSkin3();
+        // }else if(i == 3){
+        //     temp.DefineSkin4();
+        // }
+
+        players.push_back(temp);
     }
 
     InitSnakes();
@@ -72,8 +86,6 @@ void Board::DrawBoard(int PosX, int PosY)
     // Ciclo para recorrer filas
     for (int i = 0; i < 10; i++)
     {
-        // Dibujado de serpiente y de escalera
-
         // Dibujamos los jugadores
         for (int k = 0; k < numPlayers; k++)
         {
@@ -109,13 +121,17 @@ void Board::DrawBoard(int PosX, int PosY)
     }
 }
 
-void Board::MovePlayer()
-{
-    players[0].Move(2);
-    players[1].Move(1);
-    players[2].Move(3);
-    players[3].Move(4);
-}
+// ---------------------------
+// Esta funcion ya no es necesaria
+// ---------------------------
+
+// void Board::MovePlayer()
+// {
+//     players[0].Move(2);
+//     players[1].Move(1);
+//     players[2].Move(3);
+//     players[3].Move(4);
+// }
 
 void Board::MovePlayer(int NumPlayer, int boxes)
 {

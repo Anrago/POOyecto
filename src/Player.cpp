@@ -74,17 +74,36 @@ void Player::DrawPlayer(int posX, int posY, int cellSize, int padding)
     DrawTextureEx(this->skin,CellV,0.0f,1.0f,WHITE);
 }
 
-void Player::DefineSkin(){
-    this->skin = LoadTexture("../assets/players/Ghost.png");
+// ----------------
+// Creamos una funcion general para inicializar las 4 skins
+
+void Player::DefineSkins(int index){
+    if(index==1){
+        this->skin = LoadTexture("../assets/players/Ghost.png");
+    }
+    else if(index == 2){
+        this->skin = LoadTexture("../assets/players/GhostGirl.png");    
+    }
+    else if(index == 3){
+        this->skin = LoadTexture("../assets/players/GhostPesado.png");
+    }
+    else if(index == 4){
+        this->skin = LoadTexture("../assets/players/GhostFrio.png");
+    }
 }
 
-void Player::DefineSkin2(){
-    this->skin = LoadTexture("../assets/players/GhostGirl.png");
-}
+// void Player::DefineSkin(){
+//     this->skin = LoadTexture("../assets/players/Ghost.png");
+// }
 
-void Player::DefineSkin3(){
-    this->skin = LoadTexture("../assets/players/GhostPesado.png");
-}
-void Player::DefineSkin4(){
-    this->skin = LoadTexture("../assets/players/GhostFrio.png");
-}
+// void Player::DefineSkin2(){
+//     this->skin = LoadTexture("../assets/players/GhostGirl.png");
+// }
+
+// void Player::DefineSkin3(){
+//     this->skin = LoadTexture("../assets/players/GhostPesado.png");
+// }
+// void Player::DefineSkin4(){
+//     this->skin = LoadTexture("../assets/players/GhostFrio.png");
+// }
+// ----------------
