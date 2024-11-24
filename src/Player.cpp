@@ -1,78 +1,75 @@
 #include "Player.h"
 
-Player::Player(short int NumPlayer, Color PlayerColor)
+Player::Player(short int numPlayer, Color playerColor)
 {
-    this->NumPlayer = NumPlayer;
-    this->PlayerColor = PlayerColor;
+    this->numPlayer = numPlayer;
+    this->playerColor = playerColor;
 }
 
-void Player::Move(int NumCas)
+void Player::Move(int numCas)
 {
     bool retur = false;
-    for (int i = 0; i < NumCas; i++)
+    for (int i = 0; i < numCas; i++)
     {
-        if((int)Position.y == 0){
-            if(Position.x == 0 || retur == true){
+        if((int)position.y == 0){
+            if(position.x == 0 || retur == true){
                 retur = true;
-                Position.x++;
+                position.x++;
             }
             else
             {
-                Position.x--;
+                position.x--;
             }
         }
         else
         {
-            if ((int)Position.y % 2 == 1)
+            if ((int)position.y % 2 == 1)
             {
-                Position.x++;
+                position.x++;
             }
-            if ((int)Position.y % 2 == 0)
+            if ((int)position.y % 2 == 0)
             {
-                Position.x--;
+                position.x--;
             }
     //--------------------------------
-            if ((int)Position.x == 10)
+            if ((int)position.x == 10)
             {
-                Position.y--;
-                Position.x--;
+                position.y--;
+                position.x--;
             }
-            if ((int)Position.x == -1)
+            if ((int)position.x == -1)
             {
-                Position.y--;
-                Position.x++;
+                position.y--;
+                position.x++;
             }
         }
     }
 }
 
 Vector2 Player::GetPosition(){
-    return this->Position;
+    return this->position;
 }
 
-Rectangle Player::BoxPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
+Rectangle Player::BoxPlayer(int posX, int posY, int cellSize, int padding)
 {
     Vector2 CellV;
-    CellV.x = PosX + Position.x * (CELL_SIZE + PADDING);
-    CellV.y = PosY + Position.y * (CELL_SIZE + PADDING);
+    CellV.x = posX + position.x * (cellSize + padding);
+    CellV.y = posY + position.y * (cellSize + padding);
 
-    Rectangle cellRect = {CellV.x, CellV.y, float(CELL_SIZE), float(CELL_SIZE)};
-
-    // DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);    
-    // DrawTextureEx(this->skin,CellV,0.0f,1.0f,WHITE);
+    Rectangle cellRect = {CellV.x, CellV.y, float(cellSize), float(cellSize)};
     
     return cellRect;
 }
 
-void Player::DrawPlayer(int PosX, int PosY, int CELL_SIZE, int PADDING)
+void Player::DrawPlayer(int posX, int posY, int cellSize, int padding)
 {
     Vector2 CellV;
-    CellV.x = PosX + Position.x * (CELL_SIZE + PADDING);
-    CellV.y = PosY + Position.y * (CELL_SIZE + PADDING);
+    CellV.x = posX + position.x * (cellSize + padding);
+    CellV.y = posY + position.y * (cellSize + padding);
 
-    Rectangle cellRect = {CellV.x, CellV.y, float(CELL_SIZE), float(CELL_SIZE)};
+    Rectangle cellRect = {CellV.x, CellV.y, float(cellSize), float(cellSize)};
 
-    DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, PlayerColor);
+    DrawRectangle(cellRect.x, cellRect.y, cellRect.width, cellRect.height, playerColor);
     
     DrawTextureEx(this->skin,CellV,0.0f,1.0f,WHITE);
 }
@@ -91,8 +88,3 @@ void Player::DefineSkin3(){
 void Player::DefineSkin4(){
     this->skin = LoadTexture("../assets/players/GhostFrio.png");
 }
-
-// Player::Roll()
-// {
-//     return Dice::Roll();
-// }

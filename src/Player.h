@@ -3,17 +3,18 @@
 class Player
 {
 public:
-    short int NumPlayer;
-    Color PlayerColor;
+    short int numPlayer;
+    Color playerColor;
     Texture2D skin;
-    Vector2 Position = {0,9};
+    Vector2 position = {0,9};
     bool win= false;
     
-    Player(short int NumPlayer=1,Color PlayerColor = BLUE);
+    Player(short int numPlayer=1,Color playerColor = BLUE);
     // Solo dibuja el jugador
-    void DrawPlayer(int PosX, int PosY,int CELL_SIZE, int PADDING);
+    void DrawPlayer(int posX, int posY, int cellSize, int padding);
+    
     // retorna la posicion actual del jugador
-    Rectangle BoxPlayer(int PosX, int PosY,int CELL_SIZE, int PADDING);
+    Rectangle BoxPlayer(int posX, int posY, int cellSize, int padding);
     
     void Move(int NumCas);
     void DefineSkin();

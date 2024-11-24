@@ -4,11 +4,9 @@
 class Dice
 {
 private:
-    short int MaxNumber;
+    short int maxNumber;
     int result;
 public:
-    Dice(short int MaxMumbre=6);
+    Dice(short int maxNumber=6);
     int DropDice ();
-    //int Roll() override ;
-    
 };

@@ -1,17 +1,12 @@
 #include "Dice.h"
 #include <random>
 
-Dice::Dice(short int MaxMumber)
+Dice::Dice(short int maxNumber)
 {
-    this->MaxNumber=MaxMumber;
+    this->maxNumber=maxNumber;
 }
 
 int Dice::DropDice(){
-    int c = rand()%MaxNumber + 1;
+    int c = rand()%maxNumber + 1;
     return c;
 }
-
-// int Dice::Roll()
-// {
-//     return rand()%MaxNumber+1;
-// }
