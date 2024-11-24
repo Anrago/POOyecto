@@ -1,5 +1,4 @@
 #include "Menu.h"
-#include "Button.h"
 
 // ------------------------------
 // Comentario para lo de la clase de buttons
@@ -217,7 +216,7 @@ int DrawPlayerSelection(int screenWidth, int screenHeight){
     return 0;
 }
 
-Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner){
+Screen DrawWinner(int screenWidth, int screenHeight, Board* Tablero, int NumPayers, const std::vector<int>& winner){
     // -------------- Recursos -------------- //
     Sound win = LoadSound("../assets/sound/OHMYGOD.mp3");
 
@@ -271,15 +270,15 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
 
     // -------------- Winner -------------- // 
     // Ganador
-    Texture2D winnerT= Tablero.GetPlayerSkin(winner[0]);
+    Texture2D winnerT= Tablero->GetPlayerSkin(winner[0]);
     Texture2D secondT;
     Texture2D thirdT;
     if(NumPayers > 1){
         // 2do lugar
-        secondT= Tablero.GetPlayerSkin(winner[1]);
+        secondT= Tablero->GetPlayerSkin(winner[1]);
         if(NumPayers >2){
             //3er lugar
-            thirdT= Tablero.GetPlayerSkin(winner[2]);
+            thirdT= Tablero->GetPlayerSkin(winner[2]);
         }
     }
     for (int i = 0;i<NumPayers;i++ ){
@@ -377,7 +376,7 @@ Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayer
     return MENU;
 }
 
-std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado){
+std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board* Tablero, Dice dado){
     // ------------ Recursos ------------ //
     
     Music musica = LoadMusicStream("../assets/musica/AncientLake.mp3");
@@ -437,7 +436,7 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
     // bandera de ciclo
     bool finish = false;
 
-    Texture2D PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+    Texture2D PlayerSkin = Tablero->GetPlayerSkin(playerTurn);
     TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
 
     // -------- Musica -------- //
@@ -456,9 +455,9 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                 return winners;
             }
             DrawTexture(background,0,0,WHITE);
-            Tablero.DrawBoard(100, 60);
+            Tablero->DrawBoard(100, 60);
             
-            if(Tablero.players[playerTurn].win== true){
+            if(Tablero->players[playerTurn].win== true){
                 playerTurn++;
                 if(playerTurn >= NumPlayers){
                     playerTurn=0;
@@ -477,7 +476,7 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
 
                     itoa(playerMove,diceResultado,10);
                     
-                    PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+                    PlayerSkin = Tablero->GetPlayerSkin(playerTurn);
                     TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
 
                     int op=50;
@@ -492,7 +491,7 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                             UpdateMusicStream(musica);
                             
                             DrawTexture(background,0,0,WHITE);
-                            Tablero.DrawBoard(100, 60);
+                            Tablero->DrawBoard(100, 60);
                             
                             // 
                             //     Para la entrada de opacidad dibujamos todo de nuevo y vamos incrementando la 
@@ -534,10 +533,10 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                     volumen=1.0f;
 
                     // Movemos el jugador
-                    Tablero.MovePlayer(playerTurn,playerMove);
+                    Tablero->MovePlayer(playerTurn,playerMove);
                     
                     // Regresa la posicion actual del jugador
-                    PlayerPosition=Tablero.GetActualPlayerPosition(playerTurn);
+                    PlayerPosition=Tablero->GetActualPlayerPosition(playerTurn);
 
                     // Si es 0 0 Gano
                     if(PlayerPosition.x == 0 && PlayerPosition.y == 0){
@@ -546,11 +545,11 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
 
                         PlaySound(winSound);
 
-                        Tablero.players[playerTurn].win = true;
+                        Tablero->players[playerTurn].win = true;
                         
                         if(wc >= NumPlayers-1){
                             for(int i =0 ; i<NumPlayers;i++){
-                                if(Tablero.players[i].win== false){
+                                if(Tablero->players[i].win== false){
                                     winners.push_back(i);
                                     break;
                                 }
@@ -569,7 +568,7 @@ std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int
                 }
 
             // Actualizamos la textura
-            PlayerSkin = Tablero.GetPlayerSkin(playerTurn);
+            PlayerSkin = Tablero->GetPlayerSkin(playerTurn);
             TplayerV.y = (screenHeight / 2) - ((PlayerSkin.height * 4) / 2);
 
             // Jugador actual

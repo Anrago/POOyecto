@@ -1,15 +1,12 @@
 #include "Board.h"
 #include <iostream>
 
+// Inicializamos la instancia
+Board* Board::instance = nullptr;
+
 Board::Board()
 {
-    numPlayers = 1;
-    Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
-    for (int i = 0; i < numPlayers; i++)
-    {
-        Player temp = {numPlayers, colorsP[i]}; 
-        players.push_back(temp);                
-    }
+    instance = nullptr;
 
     InitSnakes();
     InitLadders();
@@ -18,8 +15,8 @@ Board::Board()
 // Este constructor hace lo mismo que el DefinePLayerPlaying, pero solo es requerida esa funcion
 // ---------------------------
 
-Board::Board(short int numPlayers)
-{
+// Board::Board(short int numPlayers)
+// {
     // Color colorsP[4] = {BLUE, RED, GREEN, YELLOW};
     // this->numPlayers = numPlayers;
 
@@ -49,7 +46,7 @@ Board::Board(short int numPlayers)
 
     // InitSnakes();
     // InitLadders();
-}
+// }
 
 void Board::DefinePlayersPlaying(short int numPlayers){
     Color colorsP[4] = {BLUE, RED, GREEN, YELLOW}; // Colores de jugadores

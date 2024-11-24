@@ -33,6 +33,7 @@ typedef enum Screen{
 */
 
 // ---------------------- Main ---------------------- //
+
 int main()
 {
     // Ventana
@@ -51,7 +52,7 @@ int main()
     int winner=0;
 
     // Tablero
-    Board board(playersPlaying);
+    Board* board = Board::getInstance();
     
     // Dados
     Dice dice;
@@ -88,7 +89,7 @@ int main()
         }
         case GAME:
         {
-            board.DefinePlayersPlaying(playersPlaying);
+            board->DefinePlayersPlaying(playersPlaying);
             winners = DrawGame(screenWidth,screenHeight,playersPlaying,numDice,board,dice);
             if(winner == -1){
                 currentScreen = MENU;
@@ -116,7 +117,7 @@ int main()
     CloseWindow();
 
     // Liberamos memoria
-    board.FreeSnakeTexture();
+    board->FreeSnakeTexture();
     return 0;
 }
 

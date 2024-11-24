@@ -12,7 +12,7 @@ void DrawExit(int screenWidth, int screenHeight);
 int DrawPlayerSelection(int screenWidth, int screenHeight);
 
 // GameScreen
-std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board Tablero, Dice dado);
+std::vector<int> DrawGame (int screenWidth, int screenHeight, int NumPlayers,int NumDice, Board* Tablero, Dice dado);
 
 // WinnerScreen
-Screen DrawWinner(int screenWidth, int screenHeight, Board Tablero, int NumPayers, const std::vector<int>& winner);
+Screen DrawWinner(int screenWidth, int screenHeight, Board* Tablero, int NumPayers, const std::vector<int>& winner);
